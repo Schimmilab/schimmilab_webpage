@@ -1,0 +1,341 @@
+/*
+ * SCHIMMILAB – Infrastruktur Page
+ * Design: Deep Space Lab – architecture docs with diagrams and tech stack
+ * Features: Architecture overview, Docker Compose snippets, cost comparison
+ */
+
+import { Server, Container, Shield, DollarSign, GitBranch, Network, HardDrive, Cpu, ChevronRight } from "lucide-react";
+import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer";
+
+const techStack = [
+  {
+    category: "Hosting",
+    icon: Server,
+    color: "#00d4ff",
+    items: [
+      { name: "Hetzner Cloud", desc: "CX21 – 2 vCPU, 4GB RAM, 40GB SSD", cost: "~5€/Monat" },
+      { name: "Hetzner Storage Box", desc: "100GB Backup-Storage", cost: "~3€/Monat" },
+    ],
+  },
+  {
+    category: "Container & Orchestrierung",
+    icon: Container,
+    color: "#00d4ff",
+    items: [
+      { name: "Docker Engine", desc: "Container Runtime, v26.x", cost: "Free" },
+      { name: "Docker Compose", desc: "Multi-Service Orchestrierung", cost: "Free" },
+      { name: "Portainer CE", desc: "Container Management UI", cost: "Free" },
+    ],
+  },
+  {
+    category: "Networking",
+    icon: Network,
+    color: "#f59e0b",
+    items: [
+      { name: "Traefik v3", desc: "Reverse Proxy, Auto-TLS via ACME", cost: "Free" },
+      { name: "Cloudflare", desc: "DNS, DDoS-Schutz, CDN", cost: "Free Tier" },
+      { name: "WireGuard", desc: "VPN für Admin-Zugriff", cost: "Free" },
+    ],
+  },
+  {
+    category: "Sicherheit",
+    icon: Shield,
+    color: "#f59e0b",
+    items: [
+      { name: "Fail2Ban", desc: "Brute-Force-Schutz", cost: "Free" },
+      { name: "UFW", desc: "Firewall, nur Port 80/443/51820 offen", cost: "Free" },
+      { name: "Authelia", desc: "2FA für alle Services", cost: "Free" },
+    ],
+  },
+  {
+    category: "CI/CD",
+    icon: GitBranch,
+    color: "#00d4ff",
+    items: [
+      { name: "GitHub Actions", desc: "Build, Test, Deploy Pipelines", cost: "Free Tier" },
+      { name: "Self-hosted Runner", desc: "Für interne Deployments", cost: "Free" },
+      { name: "Watchtower", desc: "Automatische Container-Updates", cost: "Free" },
+    ],
+  },
+  {
+    category: "Storage & Backup",
+    icon: HardDrive,
+    color: "#f59e0b",
+    items: [
+      { name: "Restic", desc: "Inkrementelle Backups zu Hetzner", cost: "Free" },
+      { name: "MinIO", desc: "S3-kompatibler lokaler Storage", cost: "Free" },
+    ],
+  },
+];
+
+const architectureLayers = [
+  {
+    layer: "L1 – Internet",
+    color: "#00d4ff",
+    components: ["Cloudflare DNS", "DDoS Protection", "CDN"],
+  },
+  {
+    layer: "L2 – Edge",
+    color: "#00d4ff",
+    components: ["Traefik Reverse Proxy", "Auto-TLS (ACME)", "Rate Limiting", "Auth Middleware"],
+  },
+  {
+    layer: "L3 – Services",
+    color: "#f59e0b",
+    components: ["Schimmilab Web", "Portainer", "Authelia", "Ollama", "n8n", "Home Assistant"],
+  },
+  {
+    layer: "L4 – Data",
+    color: "#f59e0b",
+    components: ["PostgreSQL", "Redis", "MinIO", "Prometheus", "Grafana"],
+  },
+  {
+    layer: "L5 – Infrastructure",
+    color: "#00d4ff",
+    components: ["Hetzner CX21", "Ubuntu 24.04 LTS", "Docker Engine", "WireGuard VPN"],
+  },
+];
+
+const dockerComposeSnippet = `version: "3.8"
+
+services:
+  traefik:
+    image: traefik:v3
+    command:
+      - "--providers.docker=true"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.le.acme.email=\${ACME_EMAIL}"
+      - "--certificatesresolvers.le.acme.storage=/certs/acme.json"
+      - "--certificatesresolvers.le.acme.tlschallenge=true"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./certs:/certs
+    labels:
+      - "traefik.enable=true"
+    restart: unless-stopped`;
+
+export default function Infrastruktur() {
+  return (
+    <div className="min-h-screen bg-background text-foreground">
+      <Navigation />
+
+      {/* Page Header */}
+      <section
+        className="pt-32 pb-16 border-b border-border relative overflow-hidden"
+        style={{
+          backgroundImage: `url(https://d2xsxph8kpxj0f.cloudfront.net/310519663389462490/3xYo7pHCgsopwwKpeL4Smu/infra-bg-aNMWyyF7gfCfazL44jFPMY.webp)`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
+        <div className="absolute inset-0 bg-background/85" />
+        <div className="absolute inset-0 hex-pattern opacity-20" />
+        <div className="relative z-10 container">
+          <p className="text-xs text-[#00d4ff] uppercase tracking-widest mb-3" style={{ fontFamily: "var(--font-mono)" }}>
+            // 02 — Infrastruktur
+          </p>
+          <h1 className="text-4xl md:text-6xl font-bold mb-4" style={{ fontFamily: "var(--font-display)" }}>
+            Viele reden.
+            <br />
+            <span className="text-[#00d4ff]">Ich dokumentiere.</span>
+          </h1>
+          <p className="text-muted-foreground max-w-xl leading-relaxed" style={{ fontFamily: "var(--font-body)" }}>
+            Architekturdiagramme, Docker Compose Files, Security-Überlegungen und Kostenvergleiche.
+            Transparenz als Prinzip.
+          </p>
+        </div>
+      </section>
+
+      {/* Architecture Layers */}
+      <section className="py-16 border-b border-border">
+        <div className="container">
+          <p className="text-xs text-[#00d4ff] uppercase tracking-widest mb-3" style={{ fontFamily: "var(--font-mono)" }}>
+            // Architektur-Übersicht
+          </p>
+          <h2 className="text-2xl md:text-3xl font-bold mb-10" style={{ fontFamily: "var(--font-display)" }}>
+            Stack-Architektur
+          </h2>
+
+          <div className="space-y-2">
+            {architectureLayers.map((layer, i) => (
+              <div
+                key={layer.layer}
+                className="border border-border bg-card p-4 flex items-start gap-4 hover:border-[#00d4ff]/30 transition-colors"
+                style={{ animationDelay: `${i * 80}ms` }}
+              >
+                <div className="flex-shrink-0 w-32">
+                  <span
+                    className="text-xs font-semibold"
+                    style={{ fontFamily: "var(--font-mono)", color: layer.color }}
+                  >
+                    {layer.layer}
+                  </span>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {layer.components.map((comp) => (
+                    <span
+                      key={comp}
+                      className="text-xs px-2 py-1 bg-secondary text-muted-foreground border border-border"
+                      style={{ fontFamily: "var(--font-mono)" }}
+                    >
+                      {comp}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Tech Stack Details */}
+      <section className="py-16 border-b border-border">
+        <div className="container">
+          <p className="text-xs text-[#00d4ff] uppercase tracking-widest mb-3" style={{ fontFamily: "var(--font-mono)" }}>
+            // Tech Stack
+          </p>
+          <h2 className="text-2xl md:text-3xl font-bold mb-10" style={{ fontFamily: "var(--font-display)" }}>
+            Was läuft wo und warum
+          </h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {techStack.map((section) => (
+              <div key={section.category} className="border border-border bg-card p-5">
+                <div className="flex items-center gap-3 mb-4">
+                  <section.icon className="w-4 h-4" style={{ color: section.color }} />
+                  <h3
+                    className="text-sm font-semibold text-foreground"
+                    style={{ fontFamily: "var(--font-display)" }}
+                  >
+                    {section.category}
+                  </h3>
+                </div>
+                <div className="space-y-3">
+                  {section.items.map((item) => (
+                    <div key={item.name} className="flex items-start justify-between gap-2">
+                      <div>
+                        <p className="text-sm text-foreground" style={{ fontFamily: "var(--font-display)" }}>
+                          {item.name}
+                        </p>
+                        <p className="text-xs text-muted-foreground" style={{ fontFamily: "var(--font-body)" }}>
+                          {item.desc}
+                        </p>
+                      </div>
+                      <span
+                        className={`text-xs flex-shrink-0 px-1.5 py-0.5 ${
+                          item.cost === "Free" || item.cost === "Free Tier"
+                            ? "text-emerald-400 bg-emerald-400/10"
+                            : "text-[#f59e0b] bg-[#f59e0b]/10"
+                        }`}
+                        style={{ fontFamily: "var(--font-mono)" }}
+                      >
+                        {item.cost}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Docker Compose Snippet */}
+      <section className="py-16 border-b border-border">
+        <div className="container">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
+            <div>
+              <p className="text-xs text-[#f59e0b] uppercase tracking-widest mb-3" style={{ fontFamily: "var(--font-mono)" }}>
+                // Code-Beispiel
+              </p>
+              <h2 className="text-2xl md:text-3xl font-bold mb-4" style={{ fontFamily: "var(--font-display)" }}>
+                Traefik Docker Compose
+              </h2>
+              <p className="text-muted-foreground leading-relaxed mb-6" style={{ fontFamily: "var(--font-body)" }}>
+                Das ist das Herzstück der Infrastruktur. Traefik als Reverse Proxy mit automatischer
+                TLS-Zertifikatsverwaltung via Let's Encrypt. Jeder neue Service braucht nur Labels –
+                keine Nginx-Config mehr.
+              </p>
+              <div className="space-y-3 text-sm text-muted-foreground" style={{ fontFamily: "var(--font-body)" }}>
+                <div className="flex items-start gap-2">
+                  <ChevronRight className="w-4 h-4 text-[#00d4ff] flex-shrink-0 mt-0.5" />
+                  <span>Automatische TLS-Zertifikate für alle Services</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <ChevronRight className="w-4 h-4 text-[#00d4ff] flex-shrink-0 mt-0.5" />
+                  <span>Docker-Socket Read-Only gemountet (Security)</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <ChevronRight className="w-4 h-4 text-[#00d4ff] flex-shrink-0 mt-0.5" />
+                  <span>Neuer Service = nur Labels hinzufügen</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="relative">
+              <div className="border border-[#00d4ff]/30 bg-card overflow-hidden">
+                {/* Code header */}
+                <div className="flex items-center gap-2 px-4 py-3 border-b border-border bg-secondary/50">
+                  <div className="flex gap-1.5">
+                    <div className="w-3 h-3 rounded-full bg-red-500/60" />
+                    <div className="w-3 h-3 rounded-full bg-yellow-500/60" />
+                    <div className="w-3 h-3 rounded-full bg-emerald-500/60" />
+                  </div>
+                  <span className="text-xs text-muted-foreground ml-2" style={{ fontFamily: "var(--font-mono)" }}>
+                    docker-compose.yml
+                  </span>
+                </div>
+                <pre
+                  className="p-4 text-xs text-muted-foreground overflow-x-auto leading-relaxed"
+                  style={{ fontFamily: "var(--font-mono)" }}
+                >
+                  <code>{dockerComposeSnippet}</code>
+                </pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Cost Overview */}
+      <section className="py-16">
+        <div className="container">
+          <p className="text-xs text-[#f59e0b] uppercase tracking-widest mb-3" style={{ fontFamily: "var(--font-mono)" }}>
+            // Kostenübersicht
+          </p>
+          <h2 className="text-2xl md:text-3xl font-bold mb-10" style={{ fontFamily: "var(--font-display)" }}>
+            Was kostet das alles?
+          </h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {[
+              { label: "Monatliche Serverkosten", value: "~8€", desc: "Hetzner CX21 + Storage Box", icon: DollarSign, color: "#f59e0b" },
+              { label: "Software-Kosten", value: "0€", desc: "Alles Open Source", icon: Cpu, color: "#00d4ff" },
+              { label: "Jährliche Gesamtkosten", value: "~96€", desc: "Vollständige Self-Hosted Infrastruktur", icon: Server, color: "#f59e0b" },
+            ].map((item) => (
+              <div key={item.label} className="border border-border bg-card p-6">
+                <item.icon className="w-5 h-5 mb-3" style={{ color: item.color }} />
+                <p className="text-3xl font-bold mb-1" style={{ fontFamily: "var(--font-display)", color: item.color }}>
+                  {item.value}
+                </p>
+                <p className="text-sm font-medium text-foreground mb-1" style={{ fontFamily: "var(--font-display)" }}>
+                  {item.label}
+                </p>
+                <p className="text-xs text-muted-foreground" style={{ fontFamily: "var(--font-body)" }}>
+                  {item.desc}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <Footer />
+    </div>
+  );
+}

@@ -1,3 +1,10 @@
+/*
+ * SCHIMMILAB – Design System
+ * Philosophy: "Deep Space Lab" – Dark Sci-Fi / Cyberpunk Minimal
+ * Colors: Deep Navy-Black bg, Electric Cyan accent, Warm Amber secondary
+ * Fonts: Space Grotesk (Display), DM Sans (Body), JetBrains Mono (Code)
+ */
+
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -40,86 +47,101 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Custom Lab Colors */
+  --color-lab-cyan: var(--lab-cyan);
+  --color-lab-amber: var(--lab-amber);
+  --color-lab-surface: var(--lab-surface);
+  --color-lab-surface-2: var(--lab-surface-2);
+
+  /* Custom Fonts */
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
 }
 
 :root {
-  --primary: var(--color-blue-700);
-  --primary-foreground: var(--color-blue-50);
-  --sidebar-primary: var(--color-blue-600);
-  --sidebar-primary-foreground: var(--color-blue-50);
-  --chart-1: var(--color-blue-300);
-  --chart-2: var(--color-blue-500);
-  --chart-3: var(--color-blue-600);
-  --chart-4: var(--color-blue-700);
-  --chart-5: var(--color-blue-800);
-  --radius: 0.65rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.235 0.015 65);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.235 0.015 65);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.235 0.015 65);
-  --secondary: oklch(0.98 0.001 286.375);
-  --secondary-foreground: oklch(0.4 0.015 65);
-  --muted: oklch(0.967 0.001 286.375);
-  --muted-foreground: oklch(0.552 0.016 285.938);
-  --accent: oklch(0.967 0.001 286.375);
-  --accent-foreground: oklch(0.141 0.005 285.823);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.985 0 0);
-  --border: oklch(0.92 0.004 286.32);
-  --input: oklch(0.92 0.004 286.32);
-  --ring: oklch(0.623 0.214 259.815);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.235 0.015 65);
-  --sidebar-accent: oklch(0.967 0.001 286.375);
-  --sidebar-accent-foreground: oklch(0.141 0.005 285.823);
-  --sidebar-border: oklch(0.92 0.004 286.32);
-  --sidebar-ring: oklch(0.623 0.214 259.815);
-}
+  --radius: 0.25rem;
 
-.dark {
-  --primary: var(--color-blue-700);
-  --primary-foreground: var(--color-blue-50);
-  --sidebar-primary: var(--color-blue-500);
-  --sidebar-primary-foreground: var(--color-blue-50);
-  --background: oklch(0.141 0.005 285.823);
-  --foreground: oklch(0.85 0.005 65);
-  --card: oklch(0.21 0.006 285.885);
-  --card-foreground: oklch(0.85 0.005 65);
-  --popover: oklch(0.21 0.006 285.885);
-  --popover-foreground: oklch(0.85 0.005 65);
-  --secondary: oklch(0.24 0.006 286.033);
-  --secondary-foreground: oklch(0.7 0.005 65);
-  --muted: oklch(0.274 0.006 286.033);
-  --muted-foreground: oklch(0.705 0.015 286.067);
-  --accent: oklch(0.274 0.006 286.033);
-  --accent-foreground:  oklch(0.92 0.005 65);
-  --destructive: oklch(0.704 0.191 22.216);
-  --destructive-foreground: oklch(0.985 0 0);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.488 0.243 264.376);
-  --chart-1: var(--color-blue-300);
-  --chart-2: var(--color-blue-500);
-  --chart-3: var(--color-blue-600);
-  --chart-4: var(--color-blue-700);
-  --chart-5: var(--color-blue-800);
-  --sidebar: oklch(0.21 0.006 285.885);
-  --sidebar-foreground: oklch(0.85 0.005 65);
-  --sidebar-accent: oklch(0.274 0.006 286.033);
-  --sidebar-accent-foreground:  oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.488 0.243 264.376);
+  /* Deep Space Lab – Dark Theme (default) */
+  --background: oklch(0.08 0.015 250);
+  --foreground: oklch(0.92 0.008 240);
+  --card: oklch(0.11 0.015 250);
+  --card-foreground: oklch(0.92 0.008 240);
+  --popover: oklch(0.11 0.015 250);
+  --popover-foreground: oklch(0.92 0.008 240);
+
+  /* Electric Cyan as primary */
+  --primary: oklch(0.78 0.18 195);
+  --primary-foreground: oklch(0.08 0.015 250);
+
+  /* Dark surface as secondary */
+  --secondary: oklch(0.14 0.015 250);
+  --secondary-foreground: oklch(0.75 0.008 240);
+
+  --muted: oklch(0.14 0.012 250);
+  --muted-foreground: oklch(0.55 0.012 240);
+
+  /* Warm Amber as accent */
+  --accent: oklch(0.75 0.17 75);
+  --accent-foreground: oklch(0.08 0.015 250);
+
+  --destructive: oklch(0.65 0.22 25);
+  --destructive-foreground: oklch(0.98 0 0);
+
+  --border: oklch(1 0 0 / 8%);
+  --input: oklch(1 0 0 / 10%);
+  --ring: oklch(0.78 0.18 195);
+
+  --chart-1: oklch(0.78 0.18 195);
+  --chart-2: oklch(0.75 0.17 75);
+  --chart-3: oklch(0.65 0.15 160);
+  --chart-4: oklch(0.70 0.15 290);
+  --chart-5: oklch(0.60 0.18 25);
+
+  --sidebar: oklch(0.10 0.015 250);
+  --sidebar-foreground: oklch(0.92 0.008 240);
+  --sidebar-primary: oklch(0.78 0.18 195);
+  --sidebar-primary-foreground: oklch(0.08 0.015 250);
+  --sidebar-accent: oklch(0.14 0.015 250);
+  --sidebar-accent-foreground: oklch(0.92 0.008 240);
+  --sidebar-border: oklch(1 0 0 / 8%);
+  --sidebar-ring: oklch(0.78 0.18 195);
+
+  /* Custom Lab Colors */
+  --lab-cyan: #00d4ff;
+  --lab-amber: #f59e0b;
+  --lab-surface: oklch(0.12 0.015 250);
+  --lab-surface-2: oklch(0.16 0.015 250);
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
     @apply bg-background text-foreground;
+    font-family: var(--font-body);
+    font-feature-settings: "kern" 1, "liga" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  code, pre, .font-mono {
+    font-family: var(--font-mono);
+  }
+
   button:not(:disabled),
   [role="button"]:not([aria-disabled="true"]),
   [type="button"]:not(:disabled),
@@ -134,24 +156,11 @@
 }
 
 @layer components {
-  /**
-   * Custom container utility that centers content and adds responsive padding.
-   *
-   * This overrides Tailwind's default container behavior to:
-   * - Auto-center content (mx-auto)
-   * - Add responsive horizontal padding
-   * - Set max-width for large screens
-   *
-   * Usage: <div className="container">...</div>
-   *
-   * For custom widths, use max-w-* utilities directly:
-   * <div className="max-w-6xl mx-auto px-4">...</div>
-   */
   .container {
     width: 100%;
     margin-left: auto;
     margin-right: auto;
-    padding-left: 1rem; /* 16px - mobile padding */
+    padding-left: 1rem;
     padding-right: 1rem;
   }
 
@@ -162,16 +171,152 @@
 
   @media (min-width: 640px) {
     .container {
-      padding-left: 1.5rem; /* 24px - tablet padding */
+      padding-left: 1.5rem;
       padding-right: 1.5rem;
     }
   }
 
   @media (min-width: 1024px) {
     .container {
-      padding-left: 2rem; /* 32px - desktop padding */
+      padding-left: 2rem;
       padding-right: 2rem;
-      max-width: 1280px; /* Standard content width */
+      max-width: 1280px;
     }
+  }
+
+  /* Lab-specific utility classes */
+  .lab-glow-cyan {
+    box-shadow: 0 0 20px oklch(0.78 0.18 195 / 30%), 0 0 40px oklch(0.78 0.18 195 / 10%);
+  }
+
+  .lab-glow-amber {
+    box-shadow: 0 0 20px oklch(0.75 0.17 75 / 30%), 0 0 40px oklch(0.75 0.17 75 / 10%);
+  }
+
+  .lab-border-cyan {
+    border: 1px solid oklch(0.78 0.18 195 / 40%);
+  }
+
+  .lab-border-amber {
+    border: 1px solid oklch(0.75 0.17 75 / 40%);
+  }
+
+  .lab-text-cyan {
+    color: #00d4ff;
+  }
+
+  .lab-text-amber {
+    color: #f59e0b;
+  }
+
+  .lab-surface {
+    background: oklch(0.12 0.015 250);
+  }
+
+  .lab-surface-2 {
+    background: oklch(0.16 0.015 250);
+  }
+
+  /* Scan-line texture overlay */
+  .scan-lines::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      oklch(0 0 0 / 3%) 2px,
+      oklch(0 0 0 / 3%) 4px
+    );
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* Glowing border animation */
+  @keyframes glow-pulse {
+    0%, 100% { box-shadow: 0 0 10px oklch(0.78 0.18 195 / 30%); }
+    50% { box-shadow: 0 0 25px oklch(0.78 0.18 195 / 60%), 0 0 50px oklch(0.78 0.18 195 / 20%); }
+  }
+
+  .glow-pulse {
+    animation: glow-pulse 3s ease-in-out infinite;
+  }
+
+  /* Typewriter cursor */
+  @keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+  }
+
+  .cursor-blink::after {
+    content: '_';
+    animation: blink 1s step-end infinite;
+    color: #00d4ff;
+  }
+
+  /* Entrance animations */
+  @keyframes slide-up-fade {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-slide-up {
+    animation: slide-up-fade 0.6s ease-out forwards;
+  }
+
+  .animate-slide-up-delay-1 {
+    animation: slide-up-fade 0.6s ease-out 0.1s forwards;
+    opacity: 0;
+  }
+
+  .animate-slide-up-delay-2 {
+    animation: slide-up-fade 0.6s ease-out 0.2s forwards;
+    opacity: 0;
+  }
+
+  .animate-slide-up-delay-3 {
+    animation: slide-up-fade 0.6s ease-out 0.3s forwards;
+    opacity: 0;
+  }
+
+  .animate-slide-up-delay-4 {
+    animation: slide-up-fade 0.6s ease-out 0.4s forwards;
+    opacity: 0;
+  }
+
+  /* Hex grid background pattern */
+  .hex-pattern {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Cpath d='M28 66L0 50V16L28 0l28 16v34L28 66zm0-2l26-15V18L28 2 2 18v31l26 15z' fill='none' stroke='%2300d4ff' stroke-opacity='0.04'/%3E%3C/svg%3E");
+  }
+
+  /* Hide scrollbar utility */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Gradient text utility */
+  .text-gradient-cyan {
+    background: linear-gradient(135deg, #00d4ff, #0088cc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-gradient-amber {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 }
