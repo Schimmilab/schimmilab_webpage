@@ -274,9 +274,10 @@ export default function Home() {
           {/* Experiment cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {latestExperiments.map((exp, i) => (
-              <article
+              <Link
                 key={exp.id}
-                className="group relative border border-border bg-card hover:border-[#00d4ff]/50 transition-all duration-300 hover:shadow-[0_0_25px_rgba(0,212,255,0.12)] hover:-translate-y-1 p-6 flex flex-col gap-4"
+                href="/experimente"
+                className="group relative border border-border bg-card hover:border-[#00d4ff]/50 transition-all duration-300 hover:shadow-[0_0_25px_rgba(0,212,255,0.12)] hover:-translate-y-1 p-6 flex flex-col gap-4 cursor-pointer"
                 style={{ transitionDelay: `${i * 80}ms` }}
               >
                 {/* Card header */}
@@ -330,12 +331,12 @@ export default function Home() {
                   ))}
                 </div>
 
-                {/* Hover arrow */}
+                {/* Mehr lesen link */}
                 <div className="flex items-center gap-1 text-xs text-[#00d4ff] opacity-0 group-hover:opacity-100 transition-opacity" style={{ fontFamily: "var(--font-mono)" }}>
                   <span>Mehr lesen</span>
                   <ArrowRight className="w-3 h-3" />
                 </div>
-              </article>
+              </Link>
             ))}
           </div>
 
