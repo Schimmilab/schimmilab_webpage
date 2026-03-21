@@ -9,6 +9,7 @@ import { Link } from "wouter";
 import { ArrowRight, FlaskConical, Brain, Server, Video, ChevronRight, Terminal, Cpu, GitBranch, Layers } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import { experiments as allExperiments } from "@/data/experiments";
 
 // Typewriter hook
 function useTypewriter(text: string, speed = 60, startDelay = 500) {
@@ -62,39 +63,8 @@ function useInView(threshold = 0.1) {
   return { ref, inView };
 }
 
-// Latest experiments data
-const latestExperiments = [
-  {
-    id: "exp-001",
-    date: "2026-02-28",
-    category: "KI / MCP",
-    title: "Model Context Protocol in der Praxis",
-    excerpt: "Wie MCP die Art verändert, wie KI-Modelle mit externen Tools interagieren – und was das für DevOps bedeutet.",
-    tags: ["MCP", "n8n", "KI"],
-    status: "Abgeschlossen",
-    statusColor: "emerald",
-  },
-  {
-    id: "exp-002",
-    date: "2026-02-15",
-    category: "Self-Hosting",
-    title: "Traefik als Reverse Proxy auf Hetzner",
-    excerpt: "Von der Idee bis zur produktiven Umgebung – Traefik, Docker Compose und Let's Encrypt in unter 2 Stunden.",
-    tags: ["Traefik", "Docker", "Hetzner"],
-    status: "Abgeschlossen",
-    statusColor: "emerald",
-  },
-  {
-    id: "exp-003",
-    date: "2026-02-01",
-    category: "Hardware",
-    title: "3D-Druck: Gehäuse für Raspberry Pi Cluster",
-    excerpt: "Wenn man zu viele Raspberry Pis hat und zu wenig Platz. Ein Experiment in Pragmatismus und FDM-Druck.",
-    tags: ["3D-Druck", "Raspberry Pi", "Hardware"],
-    status: "In Arbeit",
-    statusColor: "amber",
-  },
-];
+// Latest experiments – use first 3 from shared data
+const latestExperiments = allExperiments.slice(0, 3);
 
 // Thoughts data
 const thoughts = [
@@ -276,7 +246,7 @@ export default function Home() {
             {latestExperiments.map((exp, i) => (
               <Link
                 key={exp.id}
-                href="/experimente"
+                href={`/experimente/${exp.id}`}
                 className="group relative border border-border bg-card hover:border-[#00d4ff]/50 transition-all duration-300 hover:shadow-[0_0_25px_rgba(0,212,255,0.12)] hover:-translate-y-1 p-6 flex flex-col gap-4 cursor-pointer"
                 style={{ transitionDelay: `${i * 80}ms` }}
               >

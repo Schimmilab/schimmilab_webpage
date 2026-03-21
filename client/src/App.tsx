@@ -15,14 +15,18 @@ import Experimente from "./pages/Experimente";
 import Infrastruktur from "./pages/Infrastruktur";
 import Gedankenraum from "./pages/Gedankenraum";
 import Medien from "./pages/Medien";
+import ExperimentDetail from "./pages/ExperimentDetail";
+import GedankenDetail from "./pages/GedankenDetail";
 
 function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
       <Route path="/experimente" component={Experimente} />
+      <Route path="/experimente/:id" component={ExperimentDetail} />
       <Route path="/infrastruktur" component={Infrastruktur} />
       <Route path="/gedankenraum" component={Gedankenraum} />
+      <Route path="/gedankenraum/:id" component={GedankenDetail} />
       <Route path="/medien" component={Medien} />
       <Route path="/404" component={NotFound} />
       <Route component={NotFound} />

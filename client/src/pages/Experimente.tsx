@@ -5,7 +5,8 @@
  */
 
 import { useState } from "react";
-import { FlaskConical, ChevronRight, Tag, Calendar, CheckCircle2, Clock, AlertCircle } from "lucide-react";
+import { Link } from "wouter";
+import { FlaskConical, ChevronRight, Tag, Calendar, CheckCircle2, Clock, AlertCircle, ArrowRight } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 
@@ -282,6 +283,18 @@ export default function Experimente() {
                             {tag}
                           </span>
                         ))}
+                      </div>
+
+                      {/* Link to full detail page */}
+                      <div className="mt-6 pt-4 border-t border-border">
+                        <Link
+                          href={`/experimente/${exp.id}`}
+                          className="inline-flex items-center gap-2 px-4 py-2 bg-[#00d4ff]/10 border border-[#00d4ff]/30 text-[#00d4ff] text-xs hover:bg-[#00d4ff]/20 transition-all duration-200"
+                          style={{ fontFamily: "var(--font-mono)" }}
+                        >
+                          Vollständig lesen
+                          <ArrowRight className="w-3 h-3" />
+                        </Link>
                       </div>
                     </div>
                   )}
