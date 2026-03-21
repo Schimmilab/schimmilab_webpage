@@ -4,9 +4,19 @@
  * Features: Architecture overview, Docker Compose snippets, cost comparison
  */
 
-import { Server, Container, Shield, DollarSign, GitBranch, Network, HardDrive, Cpu, ChevronRight } from "lucide-react";
+import { useState } from "react";
+import { Server, Container, Shield, DollarSign, GitBranch, Network, HardDrive, Cpu, ChevronRight, CheckCircle2, Clock, AlertCircle, Tag, Calendar } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import { infraItems } from "@/data/infrastructure";
+
+const STATUS_ICONS: Record<string, React.ElementType> = {
+  active:      CheckCircle2,
+  in_progress: Clock,
+  planned:     AlertCircle,
+  inactive:    AlertCircle,
+  archived:    AlertCircle,
+};
 
 const techStack = [
   {
@@ -120,6 +130,8 @@ services:
     restart: unless-stopped`;
 
 export default function Infrastruktur() {
+  const [expandedId, setExpandedId] = useState<string | null>(null);
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Navigation />
@@ -192,6 +204,129 @@ export default function Infrastruktur() {
           </div>
         </div>
       </section>
+
+      {/* Dokumentierte Dienste – dynamic from infrastructure.ts */}
+      {infraItems.length > 0 && (
+        <section className="py-16 border-b border-border">
+          <div className="container">
+            <p className="text-xs text-[#00d4ff] uppercase tracking-widest mb-3" style={{ fontFamily: "var(--font-mono)" }}>
+              // Dokumentierte Dienste
+            </p>
+            <h2 className="text-2xl md:text-3xl font-bold mb-2" style={{ fontFamily: "var(--font-display)" }}>
+              Was läuft – und wie
+            </h2>
+            <p className="text-muted-foreground text-sm mb-8" style={{ fontFamily: "var(--font-body)" }}>
+              // {infraItems.length} Dienste aus Anytype synchronisiert
+            </p>
+
+            <div className="space-y-3">
+              {infraItems.map((item, i) => {
+                const isExpanded = expandedId === item.id;
+                const StatusIcon = STATUS_ICONS[item.status] ?? CheckCircle2;
+                const sections = [
+                  { label: "Überblick",   content: item.overview,     color: "#00d4ff" },
+                  { label: "Stack",       content: item.stack,        color: "#a78bfa" },
+                  { label: "Architektur", content: item.architecture, color: "#f59e0b" },
+                  { label: "Setup",       content: item.setup,        color: "#34d399" },
+                  { label: "Kosten",      content: item.costs,        color: "#f59e0b" },
+                  { label: "Sicherheit",  content: item.security,     color: "#ff4d4d" },
+                  { label: "Code",        content: item.code,         color: "#a78bfa" },
+                  { label: "Learnings",   content: item.learnings,    color: "#00d4ff" },
+                ].filter((s) => s.content?.trim());
+
+                return (
+                  <article
+                    key={item.id}
+                    className={`border transition-all duration-300 overflow-hidden bg-card ${
+                      isExpanded
+                        ? "border-[#00d4ff]/50 shadow-[0_0_30px_rgba(0,212,255,0.08)]"
+                        : "border-border hover:border-[#00d4ff]/30"
+                    }`}
+                    style={{ animationDelay: `${i * 50}ms` }}
+                  >
+                    {/* Header */}
+                    <button
+                      onClick={() => setExpandedId(isExpanded ? null : item.id)}
+                      className="w-full text-left p-5 flex items-start gap-4"
+                    >
+                      <div className="flex-1 min-w-0">
+                        <div className="flex flex-wrap items-center gap-3 mb-2">
+                          <span className="text-xs text-[#00d4ff]" style={{ fontFamily: "var(--font-mono)" }}>
+                            {item.category}
+                          </span>
+                          <span className="text-xs text-muted-foreground flex items-center gap-1" style={{ fontFamily: "var(--font-mono)" }}>
+                            <Calendar className="w-3 h-3" />
+                            {item.date}
+                          </span>
+                          <span
+                            className={`text-xs flex items-center gap-1 ${item.statusColor}`}
+                            style={{ fontFamily: "var(--font-mono)" }}
+                          >
+                            <StatusIcon className="w-3 h-3" />
+                            {item.statusLabel}
+                          </span>
+                        </div>
+                        <h3 className="text-base font-semibold text-foreground" style={{ fontFamily: "var(--font-display)" }}>
+                          {item.title}
+                        </h3>
+                        {!isExpanded && item.excerpt && (
+                          <p className="text-sm text-muted-foreground mt-1 line-clamp-2" style={{ fontFamily: "var(--font-body)" }}>
+                            {item.excerpt}
+                          </p>
+                        )}
+                      </div>
+                      <ChevronRight
+                        className={`w-4 h-4 text-muted-foreground flex-shrink-0 mt-1 transition-transform duration-300 ${
+                          isExpanded ? "rotate-90 text-[#00d4ff]" : ""
+                        }`}
+                      />
+                    </button>
+
+                    {/* Expanded Content */}
+                    {isExpanded && (
+                      <div className="px-5 pb-5 border-t border-border">
+                        <div className="space-y-6 mt-5">
+                          {sections.map((sec) => (
+                            <div key={sec.label}>
+                              <p
+                                className="text-xs uppercase tracking-wider mb-2"
+                                style={{ fontFamily: "var(--font-mono)", color: sec.color }}
+                              >
+                                // {sec.label}
+                              </p>
+                              <p
+                                className="text-sm text-muted-foreground leading-relaxed whitespace-pre-line"
+                                style={{ fontFamily: "var(--font-body)" }}
+                              >
+                                {sec.content}
+                              </p>
+                            </div>
+                          ))}
+                        </div>
+
+                        {item.tags.length > 0 && (
+                          <div className="flex flex-wrap gap-2 mt-6 pt-4 border-t border-border">
+                            <Tag className="w-3 h-3 text-muted-foreground mt-0.5" />
+                            {item.tags.map((tag) => (
+                              <span
+                                key={tag}
+                                className="text-xs px-2 py-0.5 bg-secondary text-muted-foreground"
+                                style={{ fontFamily: "var(--font-mono)" }}
+                              >
+                                {tag}
+                              </span>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </article>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Tech Stack Details */}
       <section className="py-16 border-b border-border">
