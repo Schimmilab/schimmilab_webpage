@@ -35,10 +35,11 @@ jobs:
       - name: Check for changes
         id: changes
         run: |
-          if git diff --quiet \
+          git add \
             client/src/data/experiments.ts \
             client/src/data/thoughts.ts \
-            client/src/data/infrastructure.ts; then
+            client/src/data/infrastructure.ts 2>/dev/null || true
+          if git diff --cached --quiet; then
             echo "changed=false" >> $GITHUB_OUTPUT
           else
             echo "changed=true" >> $GITHUB_OUTPUT
@@ -49,10 +50,6 @@ jobs:
         run: |
           git config user.name "schimmilab-bot"
           git config user.email "bot@schimmilab.de"
-          git add \
-            client/src/data/experiments.ts \
-            client/src/data/thoughts.ts \
-            client/src/data/infrastructure.ts
           git commit -m "sync: update content from Anytype [skip ci]"
           git push origin main
 
