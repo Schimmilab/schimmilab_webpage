@@ -1,0 +1,47 @@
+name: Sync Anytype → schimmilab.de
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+
+jobs:
+  sync:
+    name: Sync Anytype (Experimente + Gedankenraum)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GH_PAT }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install requests
+      - name: Run Anytype sync script
+        env:
+          ANYTYPE_API_TOKEN: ${{ secrets.ANYTYPE_API_TOKEN }}
+          ANYTYPE_API_BASE_URL: https://anytype-api.schimmi-n8n.de
+          ANYTYPE_SPACE_ID: ${{ secrets.ANYTYPE_SPACE_ID }}
+        run: python3 scripts/sync-anytype.py
+      - name: Check for changes
+        id: changes
+        run: |
+          if git diff --quiet client/src/data/experiments.ts client/src/data/thoughts.ts; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+          fi
+      - name: Commit and push if changed
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          git config user.name "schimmilab-bot"
+          git config user.email "bot@schimmilab.de"
+          git add client/src/data/experiments.ts client/src/data/thoughts.ts
+          git commit -m "sync: update content from Anytype [skip ci]"
+          git push origin main
+      - name: Trigger deployment
+        if: steps.changes.outputs.changed == 'true'
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.GH_PAT }}
+          event-type: anytype-sync-complete
