@@ -132,6 +132,16 @@ export default function Medien() {
                 <ExternalLink className="w-4 h-4" />
                 hfr1.de
               </a>
+              <a
+                href="https://inditritium.de"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-5 py-2.5 border border-[#f59e0b]/20 text-[#f59e0b]/70 text-sm hover:bg-[#f59e0b]/10 hover:text-[#f59e0b] transition-all duration-200"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
+                <ExternalLink className="w-4 h-4" />
+                inditritium.de
+              </a>
             </div>
           </div>
         </div>

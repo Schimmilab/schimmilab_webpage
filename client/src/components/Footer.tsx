@@ -80,6 +80,7 @@ export default function Footer() {
               {[
                 { href: "https://arcanara.de", label: "arcanara.de" },
                 { href: "https://hfr1.de", label: "hfr1.de" },
+                { href: "https://inditritium.de", label: "inditritium.de" },
               ].map((link) => (
                 <li key={link.href}>
                   <a
