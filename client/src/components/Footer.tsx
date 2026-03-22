@@ -4,7 +4,7 @@
  */
 
 import { Link } from "wouter";
-import { FlaskConical, Github, Terminal } from "lucide-react";
+import { FlaskConical, Github, Terminal, ExternalLink } from "lucide-react";
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -12,7 +12,7 @@ export default function Footer() {
   return (
     <footer className="border-t border-border mt-24">
       <div className="container py-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
           {/* Brand */}
           <div className="space-y-4">
             <Link href="/" className="flex items-center gap-3 group w-fit">
@@ -63,6 +63,35 @@ export default function Footer() {
                   >
                     {link.label}
                   </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Verwandte Projekte */}
+          <div className="space-y-4">
+            <h4
+              className="text-xs uppercase tracking-widest text-muted-foreground"
+              style={{ fontFamily: "var(--font-mono)" }}
+            >
+              // Projekte
+            </h4>
+            <ul className="space-y-2">
+              {[
+                { href: "https://arcanara.de", label: "arcanara.de" },
+                { href: "https://hfr1.de", label: "hfr1.de" },
+              ].map((link) => (
+                <li key={link.href}>
+                  <a
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-[#00d4ff] transition-colors"
+                    style={{ fontFamily: "var(--font-body)" }}
+                  >
+                    {link.label}
+                    <ExternalLink className="w-3 h-3 opacity-50" />
+                  </a>
                 </li>
               ))}
             </ul>
