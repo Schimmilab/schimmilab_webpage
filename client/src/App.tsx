@@ -17,6 +17,8 @@ import Gedankenraum from "./pages/Gedankenraum";
 import Medien from "./pages/Medien";
 import ExperimentDetail from "./pages/ExperimentDetail";
 import GedankenDetail from "./pages/GedankenDetail";
+import Impressum from "./pages/Impressum";
+import Datenschutz from "./pages/Datenschutz";
 
 function Router() {
   return (
@@ -28,6 +30,8 @@ function Router() {
       <Route path="/gedankenraum" component={Gedankenraum} />
       <Route path="/gedankenraum/:id" component={GedankenDetail} />
       <Route path="/medien" component={Medien} />
+      <Route path="/impressum" component={Impressum} />
+      <Route path="/datenschutz" component={Datenschutz} />
       <Route path="/404" component={NotFound} />
       <Route component={NotFound} />
     </Switch>

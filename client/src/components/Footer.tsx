@@ -128,6 +128,22 @@ export default function Footer() {
           <p className="text-xs text-muted-foreground" style={{ fontFamily: "var(--font-mono)" }}>
             © {year} schimmilab – Dokumentierte Neugier
           </p>
+          <div className="flex items-center gap-4">
+            <Link
+              href="/impressum"
+              className="text-xs text-muted-foreground hover:text-[#00d4ff] transition-colors"
+              style={{ fontFamily: "var(--font-mono)" }}
+            >
+              Impressum
+            </Link>
+            <Link
+              href="/datenschutz"
+              className="text-xs text-muted-foreground hover:text-[#00d4ff] transition-colors"
+              style={{ fontFamily: "var(--font-mono)" }}
+            >
+              Datenschutz
+            </Link>
+          </div>
           <p className="text-xs text-muted-foreground" style={{ fontFamily: "var(--font-mono)" }}>
             <span className="text-[#00d4ff]/60">// </span>
             Kein Marketing. Kein Influencer. Nur Experimente.
