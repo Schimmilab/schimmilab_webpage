@@ -4,7 +4,7 @@
  */
 
 import { Link } from "wouter";
-import { FlaskConical, Github, Youtube, Terminal } from "lucide-react";
+import { FlaskConical, Github, Terminal } from "lucide-react";
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -29,22 +29,13 @@ export default function Footer() {
             </p>
             <div className="flex items-center gap-3">
               <a
-                href="https://github.com"
+                href="https://github.com/Schimmilab"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-2 text-muted-foreground hover:text-[#00d4ff] transition-colors"
                 aria-label="GitHub"
               >
                 <Github className="w-4 h-4" />
-              </a>
-              <a
-                href="https://youtube.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 text-muted-foreground hover:text-[#00d4ff] transition-colors"
-                aria-label="YouTube"
-              >
-                <Youtube className="w-4 h-4" />
               </a>
             </div>
           </div>

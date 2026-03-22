@@ -173,13 +173,13 @@ export default function Gedankenraum() {
                     Weiterlesen
                   </Link>
                 ) : (
-                  <button
-                    className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#f59e0b]/20 text-[#f59e0b] border border-[#f59e0b]/30 text-sm font-semibold cursor-default"
+                  <div
+                    className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#f59e0b]/10 text-[#f59e0b]/60 border border-[#f59e0b]/20 text-sm font-semibold select-none"
                     style={{ fontFamily: "var(--font-display)" }}
                   >
                     <Brain className="w-4 h-4" />
                     Demnächst in Anytype
-                  </button>
+                  </div>
                 )}
               </div>
 
