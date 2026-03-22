@@ -44,8 +44,8 @@ export default function Datenschutz() {
               <p>Seilerstr. 25, 71144 Steinenbronn</p>
               <p>
                 E-Mail:{" "}
-                <a href="mailto:kontakt@inditritium.de" className="text-[#00d4ff] hover:text-[#00d4ff]/80 transition-colors">
-                  kontakt@inditritium.de
+                <a href="mailto:schimmi@schimmilab.de" className="text-[#00d4ff] hover:text-[#00d4ff]/80 transition-colors">
+                  schimmi@schimmilab.de
                 </a>
               </p>
             </div>
@@ -174,8 +174,8 @@ export default function Datenschutz() {
               </ul>
               <p>
                 Zur Ausübung dieser Rechte wenden Sie sich bitte an:{" "}
-                <a href="mailto:kontakt@inditritium.de" className="text-[#00d4ff] hover:text-[#00d4ff]/80 transition-colors">
-                  kontakt@inditritium.de
+                <a href="mailto:schimmi@schimmilab.de" className="text-[#00d4ff] hover:text-[#00d4ff]/80 transition-colors">
+                  schimmi@schimmilab.de
                 </a>
               </p>
             </div>

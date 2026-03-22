@@ -55,10 +55,10 @@ export default function Impressum() {
               <p>
                 E-Mail:{" "}
                 <a
-                  href="mailto:kontakt@inditritium.de"
+                  href="mailto:schimmi@schimmilab.de"
                   className="text-[#00d4ff] hover:text-[#00d4ff]/80 transition-colors"
                 >
-                  kontakt@inditritium.de
+                  schimmi@schimmilab.de
                 </a>
               </p>
               <p>Telefon: +49 152 33565803</p>
