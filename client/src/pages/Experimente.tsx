@@ -32,6 +32,8 @@ export default function Experimente() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <title>Experimente – Schimmilab</title>
+      <meta name="description" content="Alle Experimente aus dem Schimmilab: DevOps, KI, Self-Hosting, MCP und mehr. Dokumentierte Versuche mit Hypothesen, Umsetzung und Learnings." />
       <Navigation />
 
       {/* Page Header */}

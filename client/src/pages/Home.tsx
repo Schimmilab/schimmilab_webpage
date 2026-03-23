@@ -112,6 +112,9 @@ export default function Home() {
       </a>
       <Navigation />
 
+      <title>Schimmilab – Experimente zwischen Code, KI und Erkenntnis</title>
+      <meta name="description" content="Schimmilab ist ein offenes Labor für DevOps, KI, Self-Hosting, Bastelprojekte und Bewusstseins-Experimente. Dokumentierte Neugier von Schimmi." />
+
       {/* ─── MAIN CONTENT ─── */}
       <main id="main-content">
 

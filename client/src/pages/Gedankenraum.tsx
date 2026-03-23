@@ -62,6 +62,8 @@ export default function Gedankenraum() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <title>Gedankenraum – Schimmilab</title>
+      <meta name="description" content="Artikel und Reflexionen wo Technik auf Bewusstsein trifft: KI, Systemdenken, Self-Hosting-Philosophie und mehr." />
       <Navigation />
 
       {/* ─── PAGE HEADER ─── */}

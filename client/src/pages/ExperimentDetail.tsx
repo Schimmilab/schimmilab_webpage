@@ -67,6 +67,8 @@ export default function ExperimentDetail() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <title>{experiment.title} – Schimmilab</title>
+      <meta name="description" content={experiment.excerpt} />
       <Navigation />
 
       {/* ─── HEADER ─── */}

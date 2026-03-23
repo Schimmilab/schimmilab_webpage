@@ -11,6 +11,8 @@ import Footer from "@/components/Footer";
 export default function Impressum() {
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <title>Impressum – Schimmilab</title>
+      <meta name="description" content="Impressum von Schimmilab – Angaben gemäß § 5 TMG." />
       <Navigation />
 
       <section className="pt-32 pb-16 border-b border-border">

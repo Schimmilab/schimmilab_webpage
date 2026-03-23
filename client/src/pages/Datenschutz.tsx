@@ -11,6 +11,8 @@ import Footer from "@/components/Footer";
 export default function Datenschutz() {
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <title>Datenschutzerklärung – Schimmilab</title>
+      <meta name="description" content="Datenschutzerklärung von Schimmilab gemäß DSGVO." />
       <Navigation />
 
       <section className="pt-32 pb-16 border-b border-border">

@@ -11,6 +11,8 @@ import Footer from "@/components/Footer";
 export default function Medien() {
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <title>Medien – Schimmilab</title>
+      <meta name="description" content="Videos, Podcasts und Medienprojekte von Schimmilab: YouTube-Einbettungen, B-Roll Experimente und KI-generierte Inhalte." />
       <Navigation />
 
       {/* Page Header */}

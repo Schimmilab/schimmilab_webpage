@@ -134,6 +134,8 @@ export default function Infrastruktur() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <title>Infrastruktur – Schimmilab</title>
+      <meta name="description" content="Die Infrastruktur hinter Schimmilab: Hetzner VPS, Docker Compose, Traefik, GitHub Actions CI/CD und self-hosted Services." />
       <Navigation />
 
       {/* Page Header */}

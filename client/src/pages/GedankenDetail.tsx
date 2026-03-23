@@ -62,6 +62,8 @@ export default function GedankenDetail() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <title>{thought.title} – Schimmilab</title>
+      <meta name="description" content={thought.excerpt} />
       <Navigation />
 
       {/* ─── HEADER ─── */}
