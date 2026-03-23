@@ -104,7 +104,16 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-[#00d4ff] focus:text-background focus:font-semibold"
+      >
+        Zum Hauptinhalt springen
+      </a>
       <Navigation />
+
+      {/* ─── MAIN CONTENT ─── */}
+      <main id="main-content">
 
       {/* ─── HERO ─── */}
       <section
@@ -519,6 +528,8 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      </main>
 
       <Footer />
     </div>
