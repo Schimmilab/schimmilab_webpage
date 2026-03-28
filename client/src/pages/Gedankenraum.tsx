@@ -9,6 +9,7 @@ import { Link } from "wouter";
 import { Brain, ChevronRight, Calendar, Clock, Tag } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import MarkdownContent from "@/components/MarkdownContent";
 import { thoughts } from "@/data/thoughts";
 
 // Static fallback articles shown when Anytype has no content yet
@@ -49,12 +50,9 @@ const FALLBACK_ARTICLES = [
 ];
 
 export default function Gedankenraum() {
-  // Merge Anytype thoughts with fallback articles
-  // Anytype content takes priority; fallback fills up to 3 visible cards
+  // Use Anytype thoughts if available, otherwise fall back to static placeholders
   const anytypeItems = thoughts.map((t) => ({ ...t, isFallback: false }));
-  const fallbackItems = FALLBACK_ARTICLES.filter(
-    (f) => !anytypeItems.some((a) => a.id === f.id)
-  );
+  const fallbackItems = anytypeItems.length === 0 ? FALLBACK_ARTICLES : [];
   const allItems = [...anytypeItems, ...fallbackItems];
 
   const featured = allItems[0];
@@ -194,18 +192,13 @@ export default function Gedankenraum() {
                   // Auszug
                 </p>
                 {featured.content ? (
-                  <div
-                    className="text-sm text-muted-foreground leading-relaxed space-y-4"
-                    style={{ fontFamily: "var(--font-body)" }}
-                  >
-                    {featured.content
-                      .split("\n\n")
-                      .slice(0, 3)
-                      .map((para, i) => (
-                        <p key={i}>{para}</p>
-                      ))}
+                  <div className="text-sm">
+                    <MarkdownContent
+                      content={featured.content.split("\n\n").slice(0, 3).join("\n\n")}
+                      accentColor="#f59e0b"
+                    />
                     <p
-                      className="text-[#f59e0b] text-xs"
+                      className="text-[#f59e0b] text-xs mt-2"
                       style={{ fontFamily: "var(--font-mono)" }}
                     >
                       [...] Vollständiger Artikel →
