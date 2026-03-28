@@ -65,11 +65,13 @@ export default function MarkdownContent({
     ),
 
     // Links – open external links in new tab
+    // Strip markdown backslash-escapes from URLs (e.g. schimmilab\_webpage → schimmilab_webpage)
     a: ({ href, children }) => {
-      const isExternal = href?.startsWith("http");
+      const cleanHref = href?.replace(/\\([^\\])/g, "$1");
+      const isExternal = cleanHref?.startsWith("http");
       return (
         <a
-          href={href}
+          href={cleanHref}
           target={isExternal ? "_blank" : undefined}
           rel={isExternal ? "noopener noreferrer" : undefined}
           className="underline underline-offset-2 hover:opacity-80 transition-opacity"
