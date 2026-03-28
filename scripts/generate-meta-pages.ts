@@ -22,13 +22,25 @@ function readIndex(): string {
   return readFileSync(join(DIST, "index.html"), "utf-8");
 }
 
-function patchHtml(html: string, title: string, description: string): string {
+function patchHtml(html: string, title: string, description: string, h1: string): string {
+  // Inject static skeleton inside #root so crawlers without JS see:
+  // - a skip link  → fixes a11y/skip-link
+  // - a <main> landmark → fixes a11y/landmark-one-main
+  // - an <h1>  → fixes core/h1
+  // - the description as visible text → improves content/word-count
+  // React replaces #root content entirely on first render, so no hydration conflict.
+  const skeleton = `<div id="root"><a href="#main-content" style="position:absolute;left:-9999px;top:0">Zum Inhalt springen</a><main id="main-content"><h1>${escapeHtml(h1)}</h1><p>${escapeHtml(description)}</p></main></div>`;
   return html
     .replace(/<title>[^<]*<\/title>/, `<title>${title}</title>`)
     .replace(
       /<meta name="description" content="[^"]*"/,
       `<meta name="description" content="${escapeAttr(description)}"`
-    );
+    )
+    .replace(/<div id="root"><\/div>/, skeleton);
+}
+
+function escapeHtml(s: string): string {
+  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
 function escapeAttr(s: string): string {
@@ -74,40 +86,55 @@ function parseDataFile(filePath: string): PageData[] {
 
 // ── Static routes ──────────────────────────────────────────────────────────
 
-const STATIC_ROUTES = [
+interface StaticRoute {
+  path: string;
+  title: string;
+  h1: string;
+  description: string;
+}
+
+const STATIC_ROUTES: StaticRoute[] = [
   {
     path: "/experimente",
-    title: "Experimente – Schimmilab",
+    title: "Experimente – Schimmilab | DevOps, KI & Self-Hosting",
+    h1: "Experimente",
     description:
-      "Dokumentierte Experimente mit DevOps, KI, Self-Hosting, Raspberry Pi und mehr. Hypothesen, Umsetzungen, Ergebnisse.",
+      "Dokumentierte Experimente rund um DevOps, KI, Self-Hosting und Raspberry Pi. Hypothesen, Umsetzungen und ehrliche Ergebnisse aus dem Lab.",
   },
   {
     path: "/infrastruktur",
-    title: "Infrastruktur – Schimmilab",
+    title: "Infrastruktur – Schimmilab | Homelab & Self-Hosted Stack",
+    h1: "Infrastruktur",
     description:
-      "Die technische Infrastruktur von Schimmilab: Homelab, Server, Dienste und Self-Hosted-Stack im Detail.",
+      "Die technische Infrastruktur von Schimmilab: Hetzner VPS, Docker, Traefik, Self-Hosted-Dienste und Homelab-Aufbau im Detail dokumentiert.",
   },
   {
     path: "/gedankenraum",
-    title: "Gedankenraum – Schimmilab",
+    title: "Gedankenraum – Schimmilab | KI, Technik & Reflexion",
+    h1: "Gedankenraum",
     description:
-      "Artikel und Reflexionen wo Technik auf Bewusstsein trifft: KI, Systemdenken, Self-Hosting-Philosophie und mehr.",
+      "Artikel und Reflexionen wo Technik auf Bewusstsein trifft: KI als Werkzeug, Systemdenken, Self-Hosting-Philosophie und digitale Autonomie.",
   },
   {
     path: "/medien",
-    title: "Medien – Schimmilab",
+    title: "Medien – Schimmilab | Empfehlungen für Tech & KI",
+    h1: "Medien",
     description:
-      "Empfohlene Bücher, Podcasts und Videos aus dem Schimmilab-Universum: Technik, KI und Bewusstsein.",
+      "Kuratierte Empfehlungen aus dem Schimmilab-Universum: Bücher, Podcasts und Videos zu Technik, KI, DevOps und Bewusstsein.",
   },
   {
     path: "/impressum",
-    title: "Impressum – Schimmilab",
-    description: "Impressum von Schimmilab gemäß § 5 TMG.",
+    title: "Impressum – Schimmilab | Angaben gemäß § 5 TMG",
+    h1: "Impressum",
+    description:
+      "Impressum von Schimmilab gemäß § 5 TMG. Angaben zum Verantwortlichen und Kontaktinformationen.",
   },
   {
     path: "/datenschutz",
-    title: "Datenschutzerklärung – Schimmilab",
-    description: "Datenschutzerklärung von Schimmilab gemäß DSGVO.",
+    title: "Datenschutzerklärung – Schimmilab | DSGVO",
+    h1: "Datenschutzerklärung",
+    description:
+      "Datenschutzerklärung von Schimmilab gemäß DSGVO. Informationen zur Verarbeitung personenbezogener Daten und zu Betroffenenrechten.",
   },
 ];
 
@@ -117,7 +144,7 @@ const index = readIndex();
 console.log("Generating per-route HTML with patched meta tags...");
 
 for (const route of STATIC_ROUTES) {
-  const html = patchHtml(index, route.title, route.description);
+  const html = patchHtml(index, route.title, route.description, route.h1);
   writeRoute(route.path, html);
 }
 
@@ -128,7 +155,7 @@ const experiments = parseDataFile(
 for (const exp of experiments) {
   const title = `${exp.title} – Schimmilab`;
   const description = exp.excerpt.slice(0, 160);
-  const html = patchHtml(index, title, description);
+  const html = patchHtml(index, title, description, exp.title);
   writeRoute(`/experimente/${exp.id}`, html);
 }
 
@@ -137,7 +164,7 @@ const thoughts = parseDataFile(join(ROOT, "client/src/data/thoughts.ts"));
 for (const thought of thoughts) {
   const title = `${thought.title} – Schimmilab`;
   const description = thought.excerpt.slice(0, 160);
-  const html = patchHtml(index, title, description);
+  const html = patchHtml(index, title, description, thought.title);
   writeRoute(`/gedankenraum/${thought.id}`, html);
 }
 
