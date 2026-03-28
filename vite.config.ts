@@ -166,6 +166,9 @@ export default defineConfig({
   build: {
     outDir: path.resolve(import.meta.dirname, "dist/public"),
     emptyOutDir: true,
+    modulePreload: {
+      polyfill: false,
+    },
   },
   server: {
     port: 3000,
