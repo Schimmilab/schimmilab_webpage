@@ -9,6 +9,7 @@ import { useEffect, useMemo } from "react";
 import { ArrowLeft, Clock, Tag, Brain, ChevronRight, Calendar } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import MarkdownContent from "@/components/MarkdownContent";
 import { getThoughtById, thoughts } from "@/data/thoughts";
 
 export default function GedankenDetail() {
@@ -54,11 +55,6 @@ export default function GedankenDetail() {
 
   // Other thoughts for "Weitere Gedanken" section
   const others = thoughts.filter((t) => t.id !== thought.id).slice(0, 2);
-
-  // Parse content into paragraphs (basic markdown-aware rendering)
-  const paragraphs = thought.content
-    ? thought.content.split("\n\n").filter((p) => p.trim().length > 0)
-    : [];
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -145,56 +141,8 @@ export default function GedankenDetail() {
 
             {/* Main article body */}
             <article>
-              {paragraphs.length > 0 ? (
-                <div className="space-y-6">
-                  {paragraphs.map((para, i) => {
-                    // Render headings
-                    if (para.startsWith("## ")) {
-                      return (
-                        <h2
-                          key={i}
-                          className="text-2xl font-bold text-[#f59e0b] mt-10 mb-2"
-                          style={{ fontFamily: "var(--font-display)" }}
-                        >
-                          {para.replace(/^##\s*/, "")}
-                        </h2>
-                      );
-                    }
-                    if (para.startsWith("# ")) {
-                      return (
-                        <h1
-                          key={i}
-                          className="text-3xl font-bold text-foreground mt-10 mb-2"
-                          style={{ fontFamily: "var(--font-display)" }}
-                        >
-                          {para.replace(/^#\s*/, "")}
-                        </h1>
-                      );
-                    }
-                    // Render blockquotes
-                    if (para.startsWith("> ")) {
-                      return (
-                        <blockquote
-                          key={i}
-                          className="border-l-2 border-[#f59e0b] pl-6 py-2 text-muted-foreground italic"
-                          style={{ fontFamily: "var(--font-body)" }}
-                        >
-                          {para.replace(/^>\s*/, "")}
-                        </blockquote>
-                      );
-                    }
-                    // Regular paragraph
-                    return (
-                      <p
-                        key={i}
-                        className="text-base text-muted-foreground leading-relaxed"
-                        style={{ fontFamily: "var(--font-body)" }}
-                      >
-                        {para}
-                      </p>
-                    );
-                  })}
-                </div>
+              {thought.content ? (
+                <MarkdownContent content={thought.content} accentColor="#f59e0b" />
               ) : (
                 // Empty state: thought exists but has no content yet
                 <div className="border border-[#f59e0b]/20 bg-card p-8 text-center">

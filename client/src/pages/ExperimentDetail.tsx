@@ -9,6 +9,7 @@ import { useEffect, useMemo } from "react";
 import { ArrowLeft, Clock, Tag, FlaskConical, ChevronRight } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import MarkdownContent from "@/components/MarkdownContent";
 import { getExperimentById, experiments } from "@/data/experiments";
 
 // Section configuration: maps flat field keys to display properties
@@ -177,12 +178,7 @@ export default function ExperimentDetail() {
                       className="border-l-2 pl-6 py-2"
                       style={{ borderColor: `${sec.color}30` }}
                     >
-                      <p
-                        className="text-base text-muted-foreground leading-relaxed whitespace-pre-line"
-                        style={{ fontFamily: "var(--font-body)" }}
-                      >
-                        {content}
-                      </p>
+                      <MarkdownContent content={content} accentColor={sec.color} />
                     </div>
                   </article>
                 );

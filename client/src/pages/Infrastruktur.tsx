@@ -8,6 +8,7 @@ import { useState } from "react";
 import { Server, Container, Shield, DollarSign, GitBranch, Network, HardDrive, Cpu, ChevronRight, CheckCircle2, Clock, AlertCircle, Tag, Calendar } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import MarkdownContent from "@/components/MarkdownContent";
 import { infraItems } from "@/data/infrastructure";
 
 const STATUS_ICONS: Record<string, React.ElementType> = {
@@ -296,12 +297,10 @@ export default function Infrastruktur() {
                               >
                                 // {sec.label}
                               </p>
-                              <p
-                                className="text-sm text-muted-foreground leading-relaxed whitespace-pre-line"
-                                style={{ fontFamily: "var(--font-body)" }}
-                              >
-                                {sec.content}
-                              </p>
+                              <MarkdownContent
+                                content={sec.content!}
+                                accentColor={sec.color}
+                              />
                             </div>
                           ))}
                         </div>
