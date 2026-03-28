@@ -196,10 +196,14 @@ export default function MarkdownContent({
     ),
   };
 
+  // Anytype escapes underscores in markdown (\_) to prevent italic interpretation.
+  // Normalize these before parsing so URLs like schimmilab\_webpage become schimmilab_webpage.
+  const normalizedContent = content.replace(/\\([_*[\]()~`])/g, "$1");
+
   return (
     <div className={className}>
       <ReactMarkdown remarkPlugins={[remarkGfm]} components={components}>
-        {content}
+        {normalizedContent}
       </ReactMarkdown>
     </div>
   );
