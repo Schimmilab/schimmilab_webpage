@@ -14,6 +14,7 @@ export default function Datenschutz() {
       <title>Datenschutzerklärung – Schimmilab</title>
       <meta name="description" content="Datenschutzerklärung von Schimmilab gemäß DSGVO." />
       <Navigation />
+      <main id="main-content">
 
       <section className="pt-32 pb-16 border-b border-border">
         <div className="container">
@@ -214,6 +215,7 @@ export default function Datenschutz() {
         </div>
       </section>
 
+      </main>
       <Footer />
     </div>
   );

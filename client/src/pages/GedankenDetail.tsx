@@ -27,6 +27,7 @@ export default function GedankenDetail() {
     return (
       <div className="min-h-screen bg-background text-foreground">
         <Navigation />
+        <main id="main-content">
         <div className="container pt-40 pb-20 text-center">
           <p
             className="text-muted-foreground text-sm mb-4"
@@ -48,6 +49,7 @@ export default function GedankenDetail() {
             Zurück zum Gedankenraum
           </Link>
         </div>
+        </main>
         <Footer />
       </div>
     );
@@ -61,6 +63,7 @@ export default function GedankenDetail() {
       <title>{thought.title} – Schimmilab</title>
       <meta name="description" content={thought.excerpt} />
       <Navigation />
+      <main id="main-content">
 
       {/* ─── HEADER ─── */}
       <section className="pt-32 pb-12 border-b border-border">
@@ -280,6 +283,7 @@ export default function GedankenDetail() {
         </section>
       )}
 
+      </main>
       <Footer />
     </div>
   );

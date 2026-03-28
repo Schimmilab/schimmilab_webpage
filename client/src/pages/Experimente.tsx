@@ -35,6 +35,7 @@ export default function Experimente() {
       <title>Experimente – Schimmilab</title>
       <meta name="description" content="Alle Experimente aus dem Schimmilab: DevOps, KI, Self-Hosting, MCP und mehr. Dokumentierte Versuche mit Hypothesen, Umsetzung und Learnings." />
       <Navigation />
+      <main id="main-content">
 
       {/* Page Header */}
       <section
@@ -219,6 +220,7 @@ export default function Experimente() {
         </div>
       </section>
 
+      </main>
       <Footer />
     </div>
   );

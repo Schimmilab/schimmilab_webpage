@@ -138,6 +138,7 @@ export default function Infrastruktur() {
       <title>Infrastruktur – Schimmilab</title>
       <meta name="description" content="Die Infrastruktur hinter Schimmilab: Hetzner VPS, Docker Compose, Traefik, GitHub Actions CI/CD und self-hosted Services." />
       <Navigation />
+      <main id="main-content">
 
       {/* Page Header */}
       <section
@@ -471,6 +472,7 @@ export default function Infrastruktur() {
         </div>
       </section>
 
+      </main>
       <Footer />
     </div>
   );

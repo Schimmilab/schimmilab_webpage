@@ -11,6 +11,7 @@ export default function NotFound() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Navigation />
+      <main id="main-content">
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center max-w-lg px-4">
           {/* Terminal icon */}
@@ -73,6 +74,7 @@ export default function NotFound() {
           </Link>
         </div>
       </div>
+      </main>
     </div>
   );
 }

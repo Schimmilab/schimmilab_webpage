@@ -33,7 +33,16 @@ export default function Navigation() {
   }, [location]);
 
   return (
-    <header
+    <>
+      {/* Skip link for keyboard/screen-reader accessibility */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[200] focus:px-4 focus:py-2 focus:bg-background focus:text-[#00d4ff] focus:border focus:border-[#00d4ff] focus:text-sm focus:font-semibold"
+        style={{ fontFamily: "var(--font-display)" }}
+      >
+        Zum Inhalt springen
+      </a>
+      <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
           ? "bg-background/90 backdrop-blur-md border-b border-border"
@@ -141,5 +150,6 @@ export default function Navigation() {
         </div>
       )}
     </header>
+    </>
   );
 }

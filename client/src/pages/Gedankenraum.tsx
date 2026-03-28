@@ -63,6 +63,7 @@ export default function Gedankenraum() {
       <title>Gedankenraum – Schimmilab</title>
       <meta name="description" content="Artikel und Reflexionen wo Technik auf Bewusstsein trifft: KI, Systemdenken, Self-Hosting-Philosophie und mehr." />
       <Navigation />
+      <main id="main-content">
 
       {/* ─── PAGE HEADER ─── */}
       <section
@@ -306,6 +307,7 @@ export default function Gedankenraum() {
         </div>
       </section>
 
+      </main>
       <Footer />
     </div>
   );

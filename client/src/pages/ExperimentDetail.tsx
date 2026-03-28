@@ -35,6 +35,7 @@ export default function ExperimentDetail() {
     return (
       <div className="min-h-screen bg-background text-foreground">
         <Navigation />
+        <main id="main-content">
         <div className="container pt-40 pb-20 text-center">
           <p className="text-muted-foreground font-mono text-sm mb-4">// 404 — Experiment nicht gefunden</p>
           <h1 className="text-4xl font-bold mb-8" style={{ fontFamily: "var(--font-display)" }}>
@@ -45,6 +46,7 @@ export default function ExperimentDetail() {
             Zurück zu den Experimenten
           </Link>
         </div>
+        </main>
         <Footer />
       </div>
     );
@@ -71,6 +73,7 @@ export default function ExperimentDetail() {
       <title>{experiment.title} – Schimmilab</title>
       <meta name="description" content={experiment.excerpt} />
       <Navigation />
+      <main id="main-content">
 
       {/* ─── HEADER ─── */}
       <section className="pt-32 pb-12 border-b border-border">
@@ -263,6 +266,7 @@ export default function ExperimentDetail() {
         </section>
       )}
 
+      </main>
       <Footer />
     </div>
   );

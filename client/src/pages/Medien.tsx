@@ -14,6 +14,7 @@ export default function Medien() {
       <title>Medien – Schimmilab</title>
       <meta name="description" content="Videos, Podcasts und Medienprojekte von Schimmilab: YouTube-Einbettungen, B-Roll Experimente und KI-generierte Inhalte." />
       <Navigation />
+      <main id="main-content">
 
       {/* Page Header */}
       <section
@@ -184,6 +185,7 @@ export default function Medien() {
         </div>
       </section>
 
+      </main>
       <Footer />
     </div>
   );

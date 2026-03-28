@@ -14,6 +14,7 @@ export default function Impressum() {
       <title>Impressum – Schimmilab</title>
       <meta name="description" content="Impressum von Schimmilab – Angaben gemäß § 5 TMG." />
       <Navigation />
+      <main id="main-content">
 
       <section className="pt-32 pb-16 border-b border-border">
         <div className="container">
@@ -150,6 +151,7 @@ export default function Impressum() {
         </div>
       </section>
 
+      </main>
       <Footer />
     </div>
   );
