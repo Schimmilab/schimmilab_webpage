@@ -12,7 +12,7 @@ AnyType ist das Content-Frontend für schimmilab.de — Einträge erscheinen aut
 
 - **Website:** https://schimmilab.de — "Experimente zwischen Code, KI und Erkenntnis"
 - **AnyType Space:** Schimmilab
-- **Space ID:** `ANYTYPE_SPACE_ID_REDACTED`
+- **Space ID:** siehe `ANYTYPE_SPACE_ID` in den GitHub Secrets / lokalen Umgebungsvariablen
 
 ## Inhaltstypen & deren AnyType-Keys
 
@@ -124,7 +124,7 @@ Wenn der User einen neuen Eintrag für schimmilab.de erstellen möchte:
 2. **Inhalt strukturieren:** Nutze die passende Struktur (siehe oben) und befülle sie mit den Angaben des Users. Ergänze fehlende Abschnitte sinnvoll.
 3. **Properties ableiten:** Leite `kategorie`, `experiment_status` und `tag` aus dem Inhalt ab, wenn der User sie nicht explizit nennt.
 4. **Objekt in AnyType erstellen** via `mcp__anytype__API-create-object` mit:
-   - `space_id`: `ANYTYPE_SPACE_ID_REDACTED`
+   - `space_id`: Wert aus `ANYTYPE_SPACE_ID` (GitHub Secret / lokale Env-Variable)
    - `type_key`: `experimente` | `infrastruktur` | `gedankenraum`
    - `name`: Titel des Eintrags
    - `body`: Strukturierter Markdown-Inhalt (ohne H1-Titel, der steht im `name`)
