@@ -135,6 +135,7 @@ def parse_experiment(obj: dict, markdown: str) -> dict | None:
     status_map  = {
         "Abgeschlossen": ("completed",   "text-emerald-400", "Abgeschlossen"),
         "In Arbeit":     ("in_progress", "text-amber-400",   "In Arbeit"),
+        "Laufend":       ("in_progress", "text-amber-400",   "Laufend"),
         "Geplant":       ("planned",     "text-cyan-400",    "Geplant"),
         "Archiviert":    ("archived",    "text-gray-400",    "Archiviert"),
     }
