@@ -145,6 +145,22 @@ export default function ExperimentDetail() {
               </span>
             ))}
           </div>
+
+          {/* Image Gallery */}
+          {experiment.images && experiment.images.length > 0 && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8">
+              {experiment.images.map((src, i) => (
+                <a key={i} href={src} target="_blank" rel="noopener noreferrer" className="block overflow-hidden border border-border hover:border-[#00d4ff]/50 transition-colors">
+                  <img
+                    src={src}
+                    alt={`${experiment.title} – Bild ${i + 1}`}
+                    className="w-full h-auto object-cover"
+                    loading="lazy"
+                  />
+                </a>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 

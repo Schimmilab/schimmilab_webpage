@@ -13,6 +13,7 @@ export interface Experiment {
   statusColor: string;
   statusLabel: string;
   excerpt: string;
+  images: string[];
   problem: string;
   hypothese: string;
   umsetzung: string;
@@ -59,6 +60,7 @@ Eine selbstgebaute Hochfrequenz-Feldplatte nach dem Prinzip der klassischen "Hei
     statusColor: "text-amber-400",
     statusLabel: "Laufend",
     excerpt: `Hoher Blutdruck und Beinödeme Zellwasser-Einlagerungen beeinträchtigen Wohlbefinden und Beweglichkeit. Klassische Schulmedizin setzt auf Medikamente — die...`,
+    images: [],
     problem: `Hoher Blutdruck und Beinödeme (Zellwasser-Einlagerungen) beeinträchtigen Wohlbefinden und Beweglichkeit. Klassische Schulmedizin setzt auf Medikamente — die Galvanotherapie bietet eine über 100 Jahre bewährte, nicht-invasive Ergänzung über galvanischen Gleichstrom im Milliampere-Bereich.`,
     hypothese: `Regelmäßige Heimanwendung mit dem Moser S4 (galvanisches Feinstromgerät, Vintage) kann:   
 - Den Blutdruck durch Gefäßerweiterung und Entspannung des Gefäßsystems senken   
@@ -95,6 +97,7 @@ Einsteiger-Woche 1: nur Allgemeinanwendung, Strom langsam von 0,2 → 0,5 mA ste
     statusColor: "text-emerald-400",
     statusLabel: "Abgeschlossen",
     excerpt: `Einen MCP Model Context Protocol Server bauen, der AI-Agenten eine deterministische Simulations-Engine bereitstellt. Agenten können damit komplexe Systeme...`,
+    images: [],
     problem: `Einen MCP (Model Context Protocol) Server bauen, der AI-Agenten eine deterministische Simulations-Engine bereitstellt. Agenten können damit komplexe Systeme (Ressourcen, Metriken, Entitäten, Flags) modellieren, Zustände abfragen und gezielt mutieren — vollständig reproduzierbar und mit Constraint-Schutz.   
 Kernidee: KI soll nicht nur über Systeme *reden*, sondern in einer kontrollierten Sandbox *mit ihnen interagieren* können.`,
     hypothese: `Wenn ein MCP-Server als deterministische State-Machine modelliert wird (mit Constraints, History und Fork-Support), können AI-Agenten reproduzierbare Simulations-Experimente durchführen — ohne Seiteneffekte auf Produktivsysteme.   
@@ -159,6 +162,7 @@ MCP als Interface-Layer funktioniert gut für stateful Simulationen — der Over
     statusColor: "text-emerald-400",
     statusLabel: "Abgeschlossen",
     excerpt: `Wie kann Anytype als Content-Management-System für die Schimmilab-Webseite genutzt werden, ohne manuell Dateien zu editieren?`,
+    images: [],
     problem: `Wie kann Anytype als Content-Management-System für die Schimmilab-Webseite genutzt werden, ohne manuell Dateien zu editieren?`,
     hypothese: `Der Anytype MCP Server kann über eine REST API mit einer externen Sandbox kommunizieren, wenn die \`ANYTYPE\\_API\\_BASE\\_URL\` korrekt gesetzt ist.`,
     umsetzung: `- Anytype REST API auf Hetzner deployed   
@@ -182,6 +186,7 @@ MCP als Interface-Layer funktioniert gut für stateful Simulationen — der Over
     statusColor: "text-emerald-400",
     statusLabel: "Abgeschlossen",
     excerpt: `Cloud-Dienste wie AWS oder Azure sind für Hobby-Projekte zu teuer und zu komplex. Gleichzeitig soll die Infrastruktur professionell und wartbar sein.`,
+    images: [],
     problem: `Cloud-Dienste wie AWS oder Azure sind für Hobby-Projekte zu teuer und zu komplex. Gleichzeitig soll die Infrastruktur professionell und wartbar sein.`,
     hypothese: `Ein Hetzner CX21 (5€/Monat) mit Docker Compose, Traefik als Reverse Proxy und GitHub Actions für CI/CD reicht für alle Schimmilab-Services aus.`,
     umsetzung: `- Hetzner CX21: 2 vCPU, 4GB RAM, 40GB SSD   
@@ -207,6 +212,7 @@ MCP als Interface-Layer funktioniert gut für stateful Simulationen — der Over
     statusColor: "text-emerald-400",
     statusLabel: "Abgeschlossen",
     excerpt: `Repetitive Aufgaben wie Benachrichtigungen, Daten-Sync und API-Integrationen kosten Zeit und sind fehleranfällig wenn manuell ausgeführt.`,
+    images: [],
     problem: `Repetitive Aufgaben wie Benachrichtigungen, Daten-Sync und API-Integrationen kosten Zeit und sind fehleranfällig wenn manuell ausgeführt.`,
     hypothese: `n8n als Self-Hosted Workflow-Automation kann als Middleware zwischen verschiedenen Services fungieren und komplexe Automatisierungen ohne Code ermöglichen.`,
     umsetzung: `- n8n Self-Hosted auf Hetzner-Server   
@@ -229,6 +235,7 @@ MCP als Interface-Layer funktioniert gut für stateful Simulationen — der Over
     statusColor: "text-emerald-400",
     statusLabel: "Abgeschlossen",
     excerpt: `Manuelle Deployments sind fehleranfällig und zeitaufwändig. Jeder Push auf main soll automatisch deployed werden.`,
+    images: [],
     problem: `Manuelle Deployments sind fehleranfällig und zeitaufwändig. Jeder Push auf main soll automatisch deployed werden.`,
     hypothese: `GitHub Actions kann den Build-Prozess (Vite), die Docker-Image-Erstellung und das Deployment auf den Hetzner-Server vollständig automatisieren.`,
     umsetzung: `- GitHub Actions Workflow: Build → Docker Build → SSH Deploy   
