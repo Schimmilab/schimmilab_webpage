@@ -145,6 +145,9 @@ def parse_experiment(obj: dict, markdown: str) -> dict | None:
     kategorie_prop = get_prop(props, "kategorie")
     kategorie      = (kategorie_prop.get("text") or "").strip()
 
+    # Images: extract public https:// image URLs embedded in the markdown
+    images = re.findall(r'!\[[^\]]*\]\((https://[^)]+)\)', markdown)
+
     # Sections from full Markdown content
     problem   = extract_section(markdown, "Problem",   _EXP_HEADINGS)
     hypothese = extract_section(markdown, "Hypothese", _EXP_HEADINGS)
@@ -187,6 +190,7 @@ def parse_experiment(obj: dict, markdown: str) -> dict | None:
         "statusColor": status_color,
         "statusLabel": status_label,
         "excerpt":     excerpt,
+        "images":      images,
         "problem":     problem,
         "hypothese":   hypothese,
         "umsetzung":   umsetzung,
@@ -317,6 +321,7 @@ def gen_experiments_ts(experiments: list) -> str:
         "  statusColor: string;",
         "  statusLabel: string;",
         "  excerpt: string;",
+        "  images: string[];",
         "  problem: string;",
         "  hypothese: string;",
         "  umsetzung: string;",
@@ -339,6 +344,7 @@ def gen_experiments_ts(experiments: list) -> str:
             f'    statusColor: "{e["statusColor"]}",',
             f'    statusLabel: "{e["statusLabel"]}",',
             f'    excerpt: `{escape_ts(e["excerpt"])}`,',
+            f'    images: [{", ".join(json.dumps(u) for u in e.get("images", []))}],',
             f'    problem: `{escape_ts(e["problem"])}`,',
             f'    hypothese: `{escape_ts(e["hypothese"])}`,',
             f'    umsetzung: `{escape_ts(e["umsetzung"])}`,',
