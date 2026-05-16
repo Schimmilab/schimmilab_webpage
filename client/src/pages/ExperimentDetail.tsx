@@ -104,11 +104,13 @@ export default function ExperimentDetail() {
             </span>
             <span
               className={`text-xs px-2 py-0.5 rounded-full border ${
-                experiment.statusColor === "emerald"
+                experiment.statusColor.includes("emerald")
                   ? "text-emerald-400 border-emerald-400/30 bg-emerald-400/5"
-                  : experiment.statusColor === "amber"
+                  : experiment.statusColor.includes("amber")
                   ? "text-amber-400 border-amber-400/30 bg-amber-400/5"
-                  : "text-blue-400 border-blue-400/30 bg-blue-400/5"
+                  : experiment.statusColor.includes("cyan")
+                  ? "text-cyan-400 border-cyan-400/30 bg-cyan-400/5"
+                  : "text-gray-400 border-gray-400/30 bg-gray-400/5"
               }`}
               style={{ fontFamily: "var(--font-mono)" }}
             >

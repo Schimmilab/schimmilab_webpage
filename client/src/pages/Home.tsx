@@ -10,6 +10,7 @@ import { ArrowRight, FlaskConical, Brain, Server, Video, ChevronRight, Terminal,
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { experiments as allExperiments } from "@/data/experiments";
+import { thoughts as allThoughts } from "@/data/thoughts";
 
 // Typewriter hook
 function useTypewriter(text: string, speed = 60, startDelay = 500) {
@@ -66,23 +67,8 @@ function useInView(threshold = 0.1) {
 // Latest experiments – use first 3 from shared data
 const latestExperiments = allExperiments.slice(0, 3);
 
-// Thoughts data
-const thoughts = [
-  {
-    id: "thought-001",
-    date: "2026-02-25",
-    title: "KI als Werkzeug oder als Gegenüber?",
-    excerpt: "Die Frage ist nicht ob KI denkt, sondern was wir tun, wenn wir so tun als ob.",
-    category: "KI & Bewusstsein",
-  },
-  {
-    id: "thought-002",
-    date: "2026-02-10",
-    title: "Kontrolle vs. Autonomie in verteilten Systemen",
-    excerpt: "Was Kubernetes und Selbstorganisation gemeinsam haben – und warum beides scheitert, wenn man es falsch versteht.",
-    category: "Systemdenken",
-  },
-];
+// Latest thoughts – first 2 from Anytype-synced data
+const latestThoughts = allThoughts.slice(0, 2);
 
 // Infrastructure highlights
 const infraHighlights = [
@@ -359,15 +345,16 @@ export default function Home() {
               </h2>
 
               <div className="space-y-4">
-                {thoughts.map((thought) => (
-                  <article
+                {latestThoughts.map((thought) => (
+                  <Link
                     key={thought.id}
+                    href={`/gedankenraum/${thought.id}`}
                     className="group border border-border bg-card hover:border-[#f59e0b]/40 transition-all duration-300 p-5 flex gap-4"
                   >
                     <div className="flex-1">
                       <div className="flex items-center gap-3 mb-2">
                         <span className="text-xs text-[#f59e0b]" style={{ fontFamily: "var(--font-mono)" }}>
-                          {thought.category}
+                          {thought.tags[0] || "Gedanke"}
                         </span>
                         <span className="text-xs text-muted-foreground" style={{ fontFamily: "var(--font-mono)" }}>
                           {thought.date}
@@ -384,7 +371,7 @@ export default function Home() {
                       </p>
                     </div>
                     <ChevronRight className="w-4 h-4 text-muted-foreground group-hover:text-[#f59e0b] transition-colors flex-shrink-0 mt-1" />
-                  </article>
+                  </Link>
                 ))}
               </div>
 
