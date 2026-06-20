@@ -154,8 +154,12 @@ const isDev = process.env.NODE_ENV !== "production";
 const plugins = [
   react(),
   tailwindcss(),
-  jsxLocPlugin(),
-  ...(isDev ? [vitePluginManusRuntime(), vitePluginManusDebugCollector()] : []),
+  // jsxLocPlugin injects data-loc attributes and source-path comments for dev
+  // tooling. Keep it out of production builds: it bloats the bundle and leaks
+  // local source paths into the shipped HTML.
+  ...(isDev
+    ? [jsxLocPlugin(), vitePluginManusRuntime(), vitePluginManusDebugCollector()]
+    : []),
 ];
 
 export default defineConfig({

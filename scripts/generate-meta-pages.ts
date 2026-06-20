@@ -29,7 +29,15 @@ function patchHtml(html: string, title: string, description: string, h1: string)
   // - an <h1>  → fixes core/h1
   // - the description as visible text → improves content/word-count
   // React replaces #root content entirely on first render, so no hydration conflict.
-  const skeleton = `<div id="root"><a href="#main-content" style="position:absolute;left:-9999px;top:0">Zum Inhalt springen</a><main id="main-content"><h1>${escapeHtml(h1)}</h1><p>${escapeHtml(description)}</p></main></div>`;
+  // Site-wide nav links so crawlers without JS see internal links + the legally
+  // required Impressum/Datenschutz links on every page. Trailing slashes match
+  // the pre-rendered directory URLs and avoid 301 redirect chains.
+  const nav =
+    `<nav aria-label="Hauptnavigation"><a href="/">Start</a><a href="/experimente/">Experimente</a>` +
+    `<a href="/infrastruktur/">Infrastruktur</a><a href="/gedankenraum/">Gedankenraum</a>` +
+    `<a href="/medien/">Medien</a><a href="/impressum/">Impressum</a>` +
+    `<a href="/datenschutz/">Datenschutz</a></nav>`;
+  const skeleton = `<div id="root"><a href="#main-content" style="position:absolute;left:-9999px;top:0">Zum Inhalt springen</a>${nav}<main id="main-content"><h1>${escapeHtml(h1)}</h1><p>${escapeHtml(description)}</p></main></div>`;
   return html
     .replace(/<title>[^<]*<\/title>/, `<title>${title}</title>`)
     .replace(
@@ -142,6 +150,17 @@ const STATIC_ROUTES: StaticRoute[] = [
 
 const index = readIndex();
 console.log("Generating per-route HTML with patched meta tags...");
+
+// Homepage: patch the root index.html in place so crawlers and social
+// scrapers see an <h1>, a <main> landmark and visible copy without running JS.
+const homeHtml = patchHtml(
+  index,
+  "Schimmilab – Experimente zwischen Code, KI und Erkenntnis",
+  "Schimmilab ist ein offenes Labor für DevOps, KI, Self-Hosting, Bastelprojekte und Bewusstseins-Experimente. Dokumentierte Neugier von Schimmi – Hypothesen, Umsetzungen und ehrliche Ergebnisse aus dem Lab.",
+  "Schimmilab – Experimente zwischen Code, KI und Erkenntnis"
+);
+writeFileSync(join(DIST, "index.html"), homeHtml, "utf-8");
+console.log("  ✓ / (homepage)");
 
 for (const route of STATIC_ROUTES) {
   const html = patchHtml(index, route.title, route.description, route.h1);
