@@ -6,35 +6,41 @@
 
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import NotFound from "@/pages/NotFound";
+import { lazy, Suspense } from "react";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
-import Home from "./pages/Home";
-import Experimente from "./pages/Experimente";
-import Infrastruktur from "./pages/Infrastruktur";
-import Gedankenraum from "./pages/Gedankenraum";
-import Medien from "./pages/Medien";
-import ExperimentDetail from "./pages/ExperimentDetail";
-import GedankenDetail from "./pages/GedankenDetail";
-import Impressum from "./pages/Impressum";
-import Datenschutz from "./pages/Datenschutz";
+
+// Route-based code splitting: each page is its own chunk, so the initial
+// payload stays small and heavy pages (markdown detail views) load on demand.
+const Home = lazy(() => import("./pages/Home"));
+const Experimente = lazy(() => import("./pages/Experimente"));
+const Infrastruktur = lazy(() => import("./pages/Infrastruktur"));
+const Gedankenraum = lazy(() => import("./pages/Gedankenraum"));
+const Medien = lazy(() => import("./pages/Medien"));
+const ExperimentDetail = lazy(() => import("./pages/ExperimentDetail"));
+const GedankenDetail = lazy(() => import("./pages/GedankenDetail"));
+const Impressum = lazy(() => import("./pages/Impressum"));
+const Datenschutz = lazy(() => import("./pages/Datenschutz"));
+const NotFound = lazy(() => import("@/pages/NotFound"));
 
 function Router() {
   return (
-    <Switch>
-      <Route path="/" component={Home} />
-      <Route path="/experimente" component={Experimente} />
-      <Route path="/experimente/:id" component={ExperimentDetail} />
-      <Route path="/infrastruktur" component={Infrastruktur} />
-      <Route path="/gedankenraum" component={Gedankenraum} />
-      <Route path="/gedankenraum/:id" component={GedankenDetail} />
-      <Route path="/medien" component={Medien} />
-      <Route path="/impressum" component={Impressum} />
-      <Route path="/datenschutz" component={Datenschutz} />
-      <Route path="/404" component={NotFound} />
-      <Route component={NotFound} />
-    </Switch>
+    <Suspense fallback={null}>
+      <Switch>
+        <Route path="/" component={Home} />
+        <Route path="/experimente" component={Experimente} />
+        <Route path="/experimente/:id" component={ExperimentDetail} />
+        <Route path="/infrastruktur" component={Infrastruktur} />
+        <Route path="/gedankenraum" component={Gedankenraum} />
+        <Route path="/gedankenraum/:id" component={GedankenDetail} />
+        <Route path="/medien" component={Medien} />
+        <Route path="/impressum" component={Impressum} />
+        <Route path="/datenschutz" component={Datenschutz} />
+        <Route path="/404" component={NotFound} />
+        <Route component={NotFound} />
+      </Switch>
+    </Suspense>
   );
 }
 

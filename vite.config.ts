@@ -179,6 +179,30 @@ export default defineConfig({
     modulePreload: {
       polyfill: false,
     },
+    rollupOptions: {
+      output: {
+        // Split heavy, rarely-changing libraries into their own cacheable
+        // chunks so no single file blows past the 250 KB budget and the
+        // markdown stack only loads on detail pages.
+        manualChunks(id) {
+          if (!id.includes("node_modules")) return;
+          if (
+            /[\\/]node_modules[\\/](react|react-dom|scheduler|wouter)[\\/]/.test(
+              id
+            )
+          )
+            return "react-vendor";
+          if (id.includes("framer-motion")) return "motion";
+          if (
+            /(react-markdown|remark|rehype|micromark|mdast|hast|unist|unified|vfile|decode-named|character-entities|property-information|space-separated|comma-separated|trim-lines|ccount|markdown-table|escape-string-regexp|longest-streak|zwitch|html-url-attributes|estree)/.test(
+              id
+            )
+          )
+            return "markdown";
+          return "vendor";
+        },
+      },
+    },
   },
   server: {
     port: 3000,
