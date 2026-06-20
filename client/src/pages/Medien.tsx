@@ -12,7 +12,7 @@ export default function Medien() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <title>Medien – Schimmilab</title>
-      <meta name="description" content="Videos, Podcasts und Medienprojekte von Schimmilab: YouTube-Einbettungen, B-Roll Experimente und KI-generierte Inhalte." />
+      <meta name="description" content="Videos, Podcasts und KI-Projekte von Schimmilab – aktuell in Vorbereitung. Hier entstehen dokumentierte Experimente als Video und Audio." />
       <Navigation />
       <main id="main-content">
 

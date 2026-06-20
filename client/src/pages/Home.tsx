@@ -467,9 +467,12 @@ export default function Home() {
             >
               <div className="absolute inset-0 bg-background/50" />
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-16 h-16 rounded-full border-2 border-[#00d4ff] flex items-center justify-center bg-background/60 hover:bg-[#00d4ff]/20 transition-colors cursor-pointer">
-                  <Video className="w-6 h-6 text-[#00d4ff] ml-1" />
-                </div>
+                <span
+                  className="text-xs uppercase tracking-widest px-3 py-1.5 border border-[#00d4ff]/40 text-[#00d4ff] bg-background/60"
+                  style={{ fontFamily: "var(--font-mono)" }}
+                >
+                  // In Vorbereitung
+                </span>
               </div>
             </div>
 
@@ -484,7 +487,7 @@ export default function Home() {
                 <span className="text-[#00d4ff]">technische Schwester</span>
               </h2>
               <p className="text-muted-foreground leading-relaxed mb-6" style={{ fontFamily: "var(--font-body)" }}>
-                YouTube-Einbettungen, B-Roll Experimente, Podcast-Zerlegungen und KI-generierte Projekte.
+                Videos, Podcasts und KI-Projekte sind in Vorbereitung.
                 Wo Arcanara philosophisch wird, wird Schimmilab technisch.
               </p>
               <Link

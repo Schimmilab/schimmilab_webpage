@@ -5,7 +5,7 @@
  */
 
 import { useState } from "react";
-import { Server, Container, Shield, DollarSign, GitBranch, Network, HardDrive, Cpu, ChevronRight, CheckCircle2, Clock, AlertCircle, Tag, Calendar } from "lucide-react";
+import { Server, Container, Shield, DollarSign, GitBranch, Network, Cpu, ChevronRight, CheckCircle2, Clock, AlertCircle, Tag, Calendar } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import MarkdownContent from "@/components/MarkdownContent";
@@ -21,12 +21,11 @@ const STATUS_ICONS: Record<string, React.ElementType> = {
 
 const techStack = [
   {
-    category: "Hosting",
+    category: "Hosting & Storage",
     icon: Server,
     color: "#00d4ff",
     items: [
-      { name: "Hetzner Cloud", desc: "CX21 – 2 vCPU, 4GB RAM, 40GB SSD", cost: "~5€/Monat" },
-      { name: "Hetzner Storage Box", desc: "100GB Backup-Storage", cost: "~3€/Monat" },
+      { name: "Hetzner CAX31 + 60GB Volume", desc: "8 vCPU (Ampere ARM), 16GB RAM, 160GB NVMe + Block-Storage", cost: "35,23€/Mon" },
     ],
   },
   {
@@ -34,7 +33,7 @@ const techStack = [
     icon: Container,
     color: "#00d4ff",
     items: [
-      { name: "Docker Engine", desc: "Container Runtime, v26.x", cost: "Free" },
+      { name: "Docker Engine", desc: "Container Runtime", cost: "Free" },
       { name: "Docker Compose", desc: "Multi-Service Orchestrierung", cost: "Free" },
       { name: "Portainer CE", desc: "Container Management UI", cost: "Free" },
     ],
@@ -44,9 +43,7 @@ const techStack = [
     icon: Network,
     color: "#f59e0b",
     items: [
-      { name: "Traefik v3", desc: "Reverse Proxy, Auto-TLS via ACME", cost: "Free" },
-      { name: "Cloudflare", desc: "DNS, DDoS-Schutz, CDN", cost: "Free Tier" },
-      { name: "WireGuard", desc: "VPN für Admin-Zugriff", cost: "Free" },
+      { name: "Traefik v3", desc: "Reverse Proxy, Auto-TLS via Let's Encrypt (ACME)", cost: "Free" },
     ],
   },
   {
@@ -54,28 +51,18 @@ const techStack = [
     icon: Shield,
     color: "#f59e0b",
     items: [
-      { name: "Fail2Ban", desc: "Brute-Force-Schutz", cost: "Free" },
-      { name: "UFW", desc: "Firewall, nur Port 80/443/51820 offen", cost: "Free" },
-      { name: "Authelia", desc: "2FA für alle Services", cost: "Free" },
+      { name: "UFW", desc: "Firewall, nur Port 80/443 offen", cost: "Free" },
+      { name: "SSH Key-only", desc: "Passwort-Login deaktiviert", cost: "Free" },
+      { name: "Hetzner Cloud Firewall", desc: "Zusätzlicher Schutz auf Netzwerkebene", cost: "Free" },
     ],
   },
   {
-    category: "CI/CD",
+    category: "CI/CD & Automation",
     icon: GitBranch,
     color: "#00d4ff",
     items: [
-      { name: "GitHub Actions", desc: "Build, Test, Deploy Pipelines", cost: "Free Tier" },
-      { name: "Self-hosted Runner", desc: "Für interne Deployments", cost: "Free" },
-      { name: "Watchtower", desc: "Automatische Container-Updates", cost: "Free" },
-    ],
-  },
-  {
-    category: "Storage & Backup",
-    icon: HardDrive,
-    color: "#f59e0b",
-    items: [
-      { name: "Restic", desc: "Inkrementelle Backups zu Hetzner", cost: "Free" },
-      { name: "MinIO", desc: "S3-kompatibler lokaler Storage", cost: "Free" },
+      { name: "GitHub Actions", desc: "Build → GHCR → Deploy auf Hetzner", cost: "Free Tier" },
+      { name: "n8n", desc: "Self-hosted Workflow-Automation", cost: "Free" },
     ],
   },
 ];
@@ -84,27 +71,22 @@ const architectureLayers = [
   {
     layer: "L1 – Internet",
     color: "#00d4ff",
-    components: ["Cloudflare DNS", "DDoS Protection", "CDN"],
+    components: ["DNS (Registrar)", "A-Record → Server-IP"],
   },
   {
     layer: "L2 – Edge",
     color: "#00d4ff",
-    components: ["Traefik Reverse Proxy", "Auto-TLS (ACME)", "Rate Limiting", "Auth Middleware"],
+    components: ["Traefik Reverse Proxy", "Auto-TLS (Let's Encrypt)", "HTTP → HTTPS"],
   },
   {
     layer: "L3 – Services",
     color: "#f59e0b",
-    components: ["Schimmilab Web", "Portainer", "Authelia", "Ollama", "n8n", "Home Assistant"],
+    components: ["schimmilab.de (nginx static)", "Portainer", "n8n"],
   },
   {
-    layer: "L4 – Data",
-    color: "#f59e0b",
-    components: ["PostgreSQL", "Redis", "MinIO", "Prometheus", "Grafana"],
-  },
-  {
-    layer: "L5 – Infrastructure",
+    layer: "L4 – Infrastruktur",
     color: "#00d4ff",
-    components: ["Hetzner CX21", "Ubuntu 24.04 LTS", "Docker Engine", "WireGuard VPN"],
+    components: ["Hetzner CAX31 (ARM)", "Ubuntu 24.04 LTS", "Docker Engine"],
   },
 ];
 
@@ -451,9 +433,9 @@ export default function Infrastruktur() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {[
-              { label: "Monatliche Serverkosten", value: "~8€", desc: "Hetzner CX21 + Storage Box", icon: DollarSign, color: "#f59e0b" },
+              { label: "Monatliche Serverkosten", value: "35,23€", desc: "Hetzner CAX31 + 60GB Volume", icon: DollarSign, color: "#f59e0b" },
               { label: "Software-Kosten", value: "0€", desc: "Alles Open Source", icon: Cpu, color: "#00d4ff" },
-              { label: "Jährliche Gesamtkosten", value: "~96€", desc: "Vollständige Self-Hosted Infrastruktur", icon: Server, color: "#f59e0b" },
+              { label: "Jährliche Gesamtkosten", value: "~423€", desc: "Server-Kosten × 12", icon: Server, color: "#f59e0b" },
             ].map((item) => (
               <div key={item.label} className="border border-border bg-card p-6">
                 <item.icon className="w-5 h-5 mb-3" style={{ color: item.color }} />
