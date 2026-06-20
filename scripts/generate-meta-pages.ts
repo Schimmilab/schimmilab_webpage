@@ -33,7 +33,7 @@ function patchHtml(html: string, title: string, description: string, h1: string)
   // required Impressum/Datenschutz links on every page. Trailing slashes match
   // the pre-rendered directory URLs and avoid 301 redirect chains.
   const nav =
-    `<nav aria-label="Hauptnavigation"><a href="/">Start</a><a href="/experimente/">Experimente</a>` +
+    `<nav aria-label="Hauptnavigation"><a href="/">Schimmilab Startseite</a><a href="/experimente/">Experimente</a>` +
     `<a href="/infrastruktur/">Infrastruktur</a><a href="/gedankenraum/">Gedankenraum</a>` +
     `<a href="/medien/">Medien</a><a href="/impressum/">Impressum</a>` +
     `<a href="/datenschutz/">Datenschutz</a></nav>`;
@@ -156,7 +156,7 @@ console.log("Generating per-route HTML with patched meta tags...");
 const homeHtml = patchHtml(
   index,
   "Schimmilab – Experimente zwischen Code, KI und Erkenntnis",
-  "Schimmilab ist ein offenes Labor für DevOps, KI, Self-Hosting, Bastelprojekte und Bewusstseins-Experimente. Dokumentierte Neugier von Schimmi – Hypothesen, Umsetzungen und ehrliche Ergebnisse aus dem Lab.",
+  "Schimmilab ist ein offenes Labor für DevOps, KI, Self-Hosting, Bastelprojekte und Bewusstseins-Experimente. Dokumentierte Neugier von Schimmi.",
   "Schimmilab – Experimente zwischen Code, KI und Erkenntnis"
 );
 writeFileSync(join(DIST, "index.html"), homeHtml, "utf-8");
