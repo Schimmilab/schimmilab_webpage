@@ -148,6 +148,16 @@ def parse_experiment(obj: dict, markdown: str) -> dict | None:
     # Images: extract public https:// image URLs embedded in the markdown
     images = re.findall(r'!\[[^\]]*\]\((https://[^)]+)\)', markdown)
 
+    # Repo-hosted header image: client/public/experiments/<slug>.webp.
+    # Anytype does not persist external image URLs in object markdown, so
+    # curated images live in the repo keyed by experiment slug instead.
+    slug = slugify(name)
+    local_img = PROJECT_DIR / "client" / "public" / "experiments" / f"{slug}.webp"
+    if local_img.exists():
+        rel = f"/experiments/{slug}.webp"
+        if rel not in images:
+            images.insert(0, rel)
+
     # Sections from full Markdown content
     problem   = extract_section(markdown, "Problem",   _EXP_HEADINGS)
     hypothese = extract_section(markdown, "Hypothese", _EXP_HEADINGS)
