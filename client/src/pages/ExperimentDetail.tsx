@@ -148,9 +148,9 @@ export default function ExperimentDetail() {
             ))}
           </div>
 
-          {/* Image Gallery */}
+          {/* Image Gallery — single image spans full width as a hero */}
           {experiment.images && experiment.images.length > 0 && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8">
+            <div className={`mt-8 ${experiment.images.length > 1 ? "grid grid-cols-1 sm:grid-cols-2 gap-4" : ""}`}>
               {experiment.images.map((src, i) => (
                 <a key={i} href={src} target="_blank" rel="noopener noreferrer" className="block overflow-hidden border border-border hover:border-[#00d4ff]/50 transition-colors">
                   <img
