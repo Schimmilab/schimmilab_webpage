@@ -139,7 +139,7 @@ def parse_experiment(obj: dict, markdown: str) -> dict | None:
         "Geplant":       ("planned",     "text-cyan-400",    "Geplant"),
         "Archiviert":    ("archived",    "text-gray-400",    "Archiviert"),
     }
-    status, status_color, status_label = status_map.get(status_raw, status_map["Abgeschlossen"])
+    status, status_color, status_label = {k.lower(): v for k, v in status_map.items()}.get(status_raw.lower(), status_map["Abgeschlossen"])
 
     # Category – use explicit "kategorie" property first, then auto-detect
     kategorie_prop = get_prop(props, "kategorie")
