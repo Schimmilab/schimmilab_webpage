@@ -1,9 +1,11 @@
 ---
 name: schimmilab-anytype
-description: Erstelle und verwalte Einträge im Schimmilab AnyType Space (Experimente, Infrastruktur, Gedankenraum), der als Frontend für schimmilab.de dient.
+description: Anytype-Referenz für schimmilab.de-Inhaltstypen (Infrastruktur + Gedankenraum) — Typen, Struktur-Headings die der Sync-Parser erwartet, Properties. Für EXPERIMENT-Artikel stattdessen den End-to-End-Skill schimmilab-experiment nutzen (inkl. Header-Bild + Sync + Verifikation).
 ---
 
 # Schimmilab AnyType Skill
+
+> **Scope (Stand 2026-07-10):** Für **Experiment-Artikel** den umfassenderen Skill **`schimmilab-experiment`** nutzen (deckt Anytype-Eintrag **plus** Pflicht-Header-Bild, Sync und Live-Verifikation ab). Dieser Skill bleibt die **Referenz für `infrastruktur` + `gedankenraum`** und für die generischen Anytype-Struktur-Vorgaben. **Header-Bild-Pipeline** (auch Infra/Gedankenraum brauchen ein `<slug>.webp`): siehe `schimmilab-experiment/workflow.md`.
 
 Dieser Skill hilft dir, Inhalte für schimmilab.de direkt in AnyType zu erstellen und zu verwalten.
 AnyType ist das Content-Frontend für schimmilab.de — Einträge erscheinen automatisch auf der Website.
@@ -21,13 +23,12 @@ Dokumentierte technische oder kreative Versuche (DevOps, KI, Self-Hosting, Baste
 
 **Properties:**
 - `kategorie` — **⚠️ API-Bug: kann nicht via MCP gesetzt werden** (intern `select`/Status-Typ, vom API fälschlich als `text` gemeldet, aber bei jedem Schreibversuch abgelehnt). Muss manuell in der AnyType-App gesetzt werden. Werte: "KI", "DevOps", "Self-Hosting", "Hardware", "Bewusstsein"
-- `experiment_status` — **⚠️ API-Bug: gleiche Einschränkung wie `kategorie`**. Manuell setzen. Gültige Werte (exakte Schreibweise beachten):
-  - `"Laufend"` → amber, laufendes Experiment
-  - `"In Arbeit"` → amber, in Bearbeitung
-  - `"Abgeschlossen"` → grün, fertig
-  - `"Geplant"` → cyan, noch nicht gestartet
-  - `"Archiviert"` → grau, nicht mehr aktiv
-  - Fallback wenn leer oder unbekannter Wert: `"Abgeschlossen"`
+- `experiment_status` — **⚠️ API-Bug: gleiche Einschränkung wie `kategorie`**. Manuell in der Anytype-App setzen. Gültige Optionen (Stand 2026-07-10, **live aus Anytype verifiziert** — die früher hier gelisteten „In Arbeit/Geplant/Archiviert" existieren nicht):
+  - `abgeschlossen` → lime, fertig
+  - `laufend` → gelb, in Arbeit
+  - `idee` → ice, noch nicht gestartet
+  - `abgebrochen` → rot, verworfen
+  - Fallback wenn leer/unbekannt: `abgeschlossen`
 - `tag` (multi_select) — **funktioniert via API**; nutze dies für Klassifikation
 
 **Workaround:** Da `kategorie` und `experiment_status` nicht via API setzbar sind, nutze `tag` für Klassifikation. Vordefinierte Tag-IDs für das `tag`-Feld des `experimente`-Typs:
