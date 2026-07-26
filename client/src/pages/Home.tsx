@@ -6,7 +6,7 @@
 
 import { useEffect, useState, useRef } from "react";
 import { Link } from "wouter";
-import { ArrowRight, FlaskConical, Brain, Server, Video, ChevronRight, Terminal, Cpu, GitBranch, Layers } from "lucide-react";
+import { ArrowRight, FlaskConical, Brain, Server, Video, ChevronRight, Terminal, Cpu, GitBranch, Layers, Play } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { experiments as allExperiments } from "@/data/experiments";
@@ -456,25 +456,33 @@ export default function Home() {
       <section className="py-20 md:py-28 border-t border-border">
         <div className="container">
           <div className="flex flex-col md:flex-row gap-8 md:gap-16 items-center">
-            {/* Image */}
-            <div
-              className="w-full md:w-1/2 h-64 md:h-80 relative overflow-hidden border border-border flex-shrink-0"
-              style={{
-                backgroundImage: `url(/bg/thoughts-bg.webp)`,
-                backgroundSize: "cover",
-                backgroundPosition: "center top",
-              }}
+            {/* Bild — das echte Video-Standbild, kein Platzhalter mehr.
+                Lokal gehostet, deshalb kein Drittanbieter-Request beim Seitenaufruf. */}
+            <Link
+              href="/medien"
+              className="group w-full md:w-1/2 h-64 md:h-80 relative overflow-hidden border border-border flex-shrink-0 block"
             >
-              <div className="absolute inset-0 bg-background/50" />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <span
-                  className="text-xs uppercase tracking-widest px-3 py-1.5 border border-[#00d4ff]/40 text-[#00d4ff] bg-background/60"
-                  style={{ fontFamily: "var(--font-mono)" }}
-                >
-                  // In Vorbereitung
+              <img
+                src="/medien/schimmilab-pilot-vorstellung.webp"
+                alt=""
+                width={1280}
+                height={720}
+                loading="lazy"
+                className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+              />
+              <span className="absolute inset-0 bg-background/35 transition-colors group-hover:bg-background/20" />
+              <span className="absolute inset-0 flex items-center justify-center">
+                <span className="flex h-14 w-14 items-center justify-center rounded-full border border-[#00d4ff]/60 bg-background/70 backdrop-blur-sm transition-all group-hover:scale-110 group-hover:border-[#00d4ff]">
+                  <Play className="ml-0.5 h-5 w-5 text-[#00d4ff]" fill="currentColor" />
                 </span>
-              </div>
-            </div>
+              </span>
+              <span
+                className="absolute bottom-3 left-3 text-xs uppercase tracking-widest px-3 py-1.5 border border-[#00d4ff]/40 text-[#00d4ff] bg-background/70"
+                style={{ fontFamily: "var(--font-mono)" }}
+              >
+                // Kanal ist live
+              </span>
+            </Link>
 
             {/* Text */}
             <div>
@@ -487,7 +495,8 @@ export default function Home() {
                 <span className="text-[#00d4ff]">technische Schwester</span>
               </h2>
               <p className="text-muted-foreground leading-relaxed mb-6" style={{ fontFamily: "var(--font-body)" }}>
-                Videos, Podcasts und KI-Projekte sind in Vorbereitung.
+                Der YouTube-Kanal ist online. Jeden Sonntag um 19:30 kommt eine Folge —
+                ein Thema, sauber erklärt, und die Stelle, an der es geklemmt hat.
                 Wo Arcanara philosophisch wird, wird Schimmilab technisch.
               </p>
               <Link
