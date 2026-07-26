@@ -6,13 +6,14 @@
 
 import { Youtube, Mic, Cpu, ExternalLink } from "lucide-react";
 import Navigation from "@/components/Navigation";
+import YouTubeEmbed from "@/components/YouTubeEmbed";
 import Footer from "@/components/Footer";
 
 export default function Medien() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <title>Medien – Schimmilab</title>
-      <meta name="description" content="Videos, Podcasts und KI-Projekte von Schimmilab – aktuell in Vorbereitung. Hier entstehen dokumentierte Experimente als Video und Audio." />
+      <meta name="description" content="Videos von Schimmilab – dokumentierte Experimente zu MCP, KI-Agenten, DevOps und Self-Hosting. Erklärt wird nur, was wirklich gebaut wurde." />
       <Navigation />
       <main id="main-content">
 
@@ -20,7 +21,7 @@ export default function Medien() {
       <section
         className="pt-32 pb-16 border-b border-border relative overflow-hidden"
         style={{
-          backgroundImage: `url(https://d2xsxph8kpxj0f.cloudfront.net/310519663389462490/3xYo7pHCgsopwwKpeL4Smu/thoughts-bg-LqCLYtcTf6MaX6zos3HLHG.webp)`,
+          backgroundImage: `url(/bg/thoughts-bg.webp)`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
@@ -43,28 +44,62 @@ export default function Medien() {
         </div>
       </section>
 
+      {/* Aktuell — Videos */}
+      <section className="py-16">
+        <div className="container">
+          <p className="text-xs text-[#00d4ff] uppercase tracking-widest mb-8" style={{ fontFamily: "var(--font-mono)" }}>
+            // Aktuell
+          </p>
+
+          <div className="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-8 items-start">
+            <YouTubeEmbed
+              videoId="og_ThEfZ-Fc"
+              title="Ich bin nicht echt. Aber alles, worüber ich rede, ist wirklich gebaut."
+              poster="/medien/schimmilab-pilot-vorstellung.webp"
+              duration="2:44"
+            />
+
+            <div className="flex flex-col gap-4">
+              <p className="text-xs text-[#f59e0b] uppercase tracking-widest" style={{ fontFamily: "var(--font-mono)" }}>
+                // Der Kanal startet
+              </p>
+              <h2 className="text-2xl md:text-3xl font-bold leading-tight" style={{ fontFamily: "var(--font-display)" }}>
+                Ich bin nicht echt.
+                <br />
+                <span className="text-muted-foreground">Aber alles, worüber ich rede, ist wirklich gebaut.</span>
+              </h2>
+              <p className="text-sm text-muted-foreground leading-relaxed" style={{ fontFamily: "var(--font-body)" }}>
+                Tess stellt den Kanal vor — und legt im ersten Satz offen, dass sie generiert ist.
+                Auf einem Kanal über KI wäre alles andere absurd. Was nicht generiert ist: die Inhalte.
+                Jede Terminalausgabe, jede Fehlermeldung, jeder Messwert im Video ist eine echte Ausgabe
+                eines echten Systems.
+              </p>
+              <p className="text-sm text-muted-foreground leading-relaxed" style={{ fontFamily: "var(--font-body)" }}>
+                Ein Thema pro Folge. Und in jeder Folge die Stelle, an der es geklemmt hat — meistens
+                der interessanteste Teil.
+              </p>
+              <a
+                href="https://www.youtube.com/@schimmilab"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 text-xs text-[#00d4ff] hover:text-[#00d4ff]/80 transition-colors mt-auto"
+                style={{ fontFamily: "var(--font-mono)" }}
+              >
+                <Youtube className="w-3 h-3" />
+                youtube.com/@schimmilab
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Coming Soon Cards */}
       <section className="py-16">
         <div className="container">
           <p className="text-xs text-[#00d4ff] uppercase tracking-widest mb-8" style={{ fontFamily: "var(--font-mono)" }}>
             // In Vorbereitung
           </p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {/* Videos */}
-            <div className="border border-border bg-card p-8 flex flex-col items-center text-center gap-4">
-              <div className="w-12 h-12 rounded border border-[#00d4ff]/30 flex items-center justify-center bg-[#00d4ff]/5">
-                <Youtube className="w-5 h-5 text-[#00d4ff]/50" />
-              </div>
-              <div>
-                <p className="text-xs text-[#00d4ff] uppercase tracking-widest mb-2" style={{ fontFamily: "var(--font-mono)" }}>
-                  // Videos
-                </p>
-                <p className="text-sm text-muted-foreground" style={{ fontFamily: "var(--font-body)" }}>
-                  Dokumentierte Experimente als Video — DevOps, Self-Hosting, KI. Kommt bald.
-                </p>
-              </div>
-            </div>
-
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Podcasts */}
             <div className="border border-border bg-card p-8 flex flex-col items-center text-center gap-4">
               <div className="w-12 h-12 rounded border border-[#f59e0b]/30 flex items-center justify-center bg-[#f59e0b]/5">

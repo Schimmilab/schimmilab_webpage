@@ -69,7 +69,7 @@ export default function Gedankenraum() {
       <section
         className="pt-32 pb-16 border-b border-border relative overflow-hidden"
         style={{
-          backgroundImage: `url(https://d2xsxph8kpxj0f.cloudfront.net/310519663389462490/3xYo7pHCgsopwwKpeL4Smu/thoughts-bg-LqCLYtcTf6MaX6zos3HLHG.webp)`,
+          backgroundImage: `url(/bg/thoughts-bg.webp)`,
           backgroundSize: "cover",
           backgroundPosition: "center top",
         }}

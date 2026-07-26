@@ -158,6 +158,32 @@ export default function Datenschutz() {
                 </a>
                 .
               </p>
+              <p>
+                <strong className="text-foreground">YouTube (Zwei-Klick-Lösung):</strong> Auf der Seite
+                „Medien" sind Videos unseres YouTube-Kanals eingebunden. Der Player wird
+                <strong className="text-foreground"> erst nach Ihrem ausdrücklichen Klick</strong> auf die
+                Wiedergabe-Schaltfläche geladen. Bis dahin sehen Sie ausschließlich ein
+                <strong className="text-foreground"> auf diesem Server gespeichertes Vorschaubild</strong>;
+                es findet <strong className="text-foreground">keine Verbindung zu YouTube</strong> statt und
+                YouTube setzt keine Cookies. Erst mit dem Klick wird der Player von{" "}
+                <span style={{ fontFamily: "var(--font-mono)" }}>youtube-nocookie.com</span>{" "}
+                geladen. Dabei wird Ihre IP-Adresse an Google Ireland Limited bzw. Google LLC übermittelt,
+                es können weitere Google-Domains (u. a.{" "}
+                <span style={{ fontFamily: "var(--font-mono)" }}>googleapis.com</span>,{" "}
+                <span style={{ fontFamily: "var(--font-mono)" }}>google.com</span>) kontaktiert und
+                Cookies bzw. vergleichbare Technologien eingesetzt werden. Rechtsgrundlage: Art. 6 Abs. 1
+                lit. a DSGVO (Einwilligung durch den Klick). Unter dem Vorschaubild steht ein
+                entsprechender Hinweis, bevor Sie klicken. Weitere Informationen:{" "}
+                <a
+                  href="https://policies.google.com/privacy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[#00d4ff] hover:text-[#00d4ff]/80 transition-colors"
+                >
+                  Google Datenschutzerklärung
+                </a>
+                .
+              </p>
             </div>
           </div>
 

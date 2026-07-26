@@ -108,7 +108,7 @@ export default function Home() {
       <section
         className="relative min-h-screen flex items-center overflow-hidden"
         style={{
-          backgroundImage: `url(https://d2xsxph8kpxj0f.cloudfront.net/310519663389462490/3xYo7pHCgsopwwKpeL4Smu/hero-bg-AqSVmeujdSvtnemd8XEap4.webp)`,
+          backgroundImage: `url(/bg/hero-bg.webp)`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
@@ -403,7 +403,7 @@ export default function Home() {
               <div
                 className="relative h-48 mb-6 overflow-hidden border border-border"
                 style={{
-                  backgroundImage: `url(https://d2xsxph8kpxj0f.cloudfront.net/310519663389462490/3xYo7pHCgsopwwKpeL4Smu/infra-bg-aNMWyyF7gfCfazL44jFPMY.webp)`,
+                  backgroundImage: `url(/bg/infra-bg.webp)`,
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                 }}
@@ -460,7 +460,7 @@ export default function Home() {
             <div
               className="w-full md:w-1/2 h-64 md:h-80 relative overflow-hidden border border-border flex-shrink-0"
               style={{
-                backgroundImage: `url(https://d2xsxph8kpxj0f.cloudfront.net/310519663389462490/3xYo7pHCgsopwwKpeL4Smu/thoughts-bg-LqCLYtcTf6MaX6zos3HLHG.webp)`,
+                backgroundImage: `url(/bg/thoughts-bg.webp)`,
                 backgroundSize: "cover",
                 backgroundPosition: "center top",
               }}

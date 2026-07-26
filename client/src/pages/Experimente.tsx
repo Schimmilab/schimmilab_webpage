@@ -41,7 +41,7 @@ export default function Experimente() {
       <section
         className="pt-32 pb-16 border-b border-border relative overflow-hidden"
         style={{
-          backgroundImage: `url(https://d2xsxph8kpxj0f.cloudfront.net/310519663389462490/3xYo7pHCgsopwwKpeL4Smu/experiments-bg-AWqnQoBzzykG4TYMzsRmPC.webp)`,
+          backgroundImage: `url(/bg/experiments-bg.webp)`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}

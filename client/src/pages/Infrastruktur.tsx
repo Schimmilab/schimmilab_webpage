@@ -126,7 +126,7 @@ export default function Infrastruktur() {
       <section
         className="pt-32 pb-16 border-b border-border relative overflow-hidden"
         style={{
-          backgroundImage: `url(https://d2xsxph8kpxj0f.cloudfront.net/310519663389462490/3xYo7pHCgsopwwKpeL4Smu/infra-bg-aNMWyyF7gfCfazL44jFPMY.webp)`,
+          backgroundImage: `url(/bg/infra-bg.webp)`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
