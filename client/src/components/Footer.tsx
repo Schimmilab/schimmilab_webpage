@@ -4,7 +4,8 @@
  */
 
 import { Link } from "wouter";
-import { FlaskConical, Github, Terminal, ExternalLink } from "lucide-react";
+import { Github, Terminal, ExternalLink } from "lucide-react";
+import LabMark from "./LabMark";
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -16,10 +17,7 @@ export default function Footer() {
           {/* Brand */}
           <div className="space-y-4">
             <Link href="/" className="flex items-center gap-3 group w-fit">
-              <div className="relative w-8 h-8 flex items-center justify-center">
-                <div className="absolute inset-0 rounded border border-[#00d4ff]/40 group-hover:border-[#00d4ff]/70 transition-all duration-300" />
-                <FlaskConical className="w-4 h-4 text-[#00d4ff]" />
-              </div>
+              <LabMark className="w-8 h-8" />
               <span className="text-base font-bold" style={{ fontFamily: "var(--font-display)" }}>
                 schimmi<span className="text-[#00d4ff]">lab</span>
               </span>

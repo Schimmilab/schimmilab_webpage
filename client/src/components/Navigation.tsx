@@ -6,7 +6,8 @@
 
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
-import { Menu, X, FlaskConical } from "lucide-react";
+import { Menu, X } from "lucide-react";
+import LabMark from "./LabMark";
 
 const navLinks = [
   { href: "/", label: "Start", prefix: "00" },
@@ -53,10 +54,7 @@ export default function Navigation() {
         <nav className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="relative w-8 h-8 md:w-10 md:h-10 flex items-center justify-center">
-              <div className="absolute inset-0 rounded border border-[#00d4ff]/40 group-hover:border-[#00d4ff]/80 transition-all duration-300 group-hover:shadow-[0_0_15px_rgba(0,212,255,0.3)]" />
-              <FlaskConical className="w-4 h-4 md:w-5 md:h-5 text-[#00d4ff]" />
-            </div>
+            <LabMark className="w-9 h-9 md:w-11 md:h-11" />
             <div className="flex flex-col leading-none">
               <span
                 className="text-base md:text-lg font-bold text-foreground tracking-tight"
