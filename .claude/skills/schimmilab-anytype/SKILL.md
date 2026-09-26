@@ -1,6 +1,7 @@
 ---
 name: schimmilab-anytype
-description: Anytype-Referenz für schimmilab.de-Inhaltstypen (Infrastruktur + Gedankenraum) — Typen, Struktur-Headings die der Sync-Parser erwartet, Properties. Für EXPERIMENT-Artikel stattdessen den End-to-End-Skill schimmilab-experiment nutzen (inkl. Header-Bild + Sync + Verifikation).
+description: >-
+  Anytype-Referenz für schimmilab.de-Inhaltstypen (Infrastruktur, Gedankenraum) — Typen, Struktur-Headings des Sync-Parsers, Properties. Für EXPERIMENT-Artikel stattdessen schimmilab-experiment.
 ---
 
 # Schimmilab AnyType Skill
@@ -117,6 +118,44 @@ Reflexionen, Ideen, Essays und Bewusstseins-Experimente.
 
 ---
 
+## ⛔⛔ Die Anytype-Suche taugt NICHT als Existenzbeweis (am Ist gemessen 2026-09-18)
+
+**Gilt fuer `API-search-space` UND `API-search-global` — beide getrennt gemessen, identisches Verhalten.**
+
+| Suchstring | Treffer |
+|---|---|
+| `Der Fehler` | ✅ 1 |
+| `Fehler, den ich nicht sehen konnte` | ✅ 1 |
+| `Fehler den ich nicht sehen konnte` — **nur das Komma fehlt** | ⛔ **0** |
+| `TalkBack` — steht vielfach im **Body** des Objekts | ⛔ **0** |
+
+🎯 **Zwei Eigenschaften, die beide nirgends dokumentiert sind:**
+1. **Exakte Substring-Suche** — ein fehlendes Satzzeichen killt den Treffer. Titel mit Komma, Doppelpunkt oder Gedankenstrich sind die Regel, nicht die Ausnahme.
+2. **Der Body wird NICHT durchsucht** — obwohl die Tool-Beschreibung *„within object names and content"* verspricht.
+
+⛔ **Anlass war ein echter Schaden:** Ein seit zwei Tagen veroeffentlichter Artikel galt aufgrund eines solchen Nullbefunds als nicht vorhanden; ich habe Schimmi auf dieser Grundlage widersprochen und lag falsch.
+
+⚠️ **Und die naheliegende Fehldiagnose steht hier als Warnung, weil sie beinahe als Befund in den Vault gewandert waere:** *„der Suchindex haengt"* — sie passte zu allen Beobachtungen (die Positivkontrolle `KI OS` lieferte nur Juli-Objekte) und war trotzdem falsch. **Eine Positivkontrolle muss aus derselben KLASSE stammen wie das Gesuchte: ein kurzer Suchstring prueft nicht, ob ein langer funktioniert.**
+
+### ✅ Was stattdessen zu tun ist
+
+**Vor JEDEM `API-create-object` pruefen, ob der Eintrag schon existiert** — sonst entsteht ein Duplikat, und das faellt erst auf der Website auf.
+
+```bash
+# schimmilab-Inhalte: die generierte Datenquelle im Repo ist die verlaessliche Quelle
+gh api repos/Schimmilab/schimmilab_webpage/contents/client/src/data/experiments.ts --jq .content \
+  | base64 -d | grep -c 'id: "<slug>"'     # > 0 => existiert schon
+# analog: thoughts.ts (gedankenraum) · infrastructure.ts (infrastruktur)
+```
+
+- Existiert der Eintrag: **`API-update-object` auf die `anytype_id`** aus der `*.ts`-Datei — **nicht** `create`.
+- Ohne Repo-Bezug: **`API-list-objects`** statt `search`, oder nur mit **kurzen, satzzeichenfreien** Namensfragmenten suchen.
+- ⛔ **Ein leeres Suchergebnis nie als „gibt es nicht" lesen.** Es heisst nur: dieser Substring steht so nicht im Namen.
+
+⛔ **Nicht versuchen, die Suche zu reparieren** — fremder Code. Dokumentiert reicht.
+
+➡️ Loop: `03-strategy/open-loops.md` · Lehre: `CLAUDE-lernprotokoll.md` (2026-09-18) · gleicher Warnblock in `schimmilab-experiment/workflow.md`.
+
 ## Anweisungen
 
 Wenn der User einen neuen Eintrag für schimmilab.de erstellen möchte:
@@ -124,6 +163,7 @@ Wenn der User einen neuen Eintrag für schimmilab.de erstellen möchte:
 1. **Typ bestimmen:** Erkenne aus dem Kontext oder frage, ob es ein Experiment, eine Infrastruktur-Doku oder ein Gedanke ist.
 2. **Inhalt strukturieren:** Nutze die passende Struktur (siehe oben) und befülle sie mit den Angaben des Users. Ergänze fehlende Abschnitte sinnvoll.
 3. **Properties ableiten:** Leite `kategorie`, `experiment_status` und `tag` aus dem Inhalt ab, wenn der User sie nicht explizit nennt.
+3b. ⛔ **Existenzpruefung vor dem Anlegen** — siehe Warnblock oben. Ein Duplikat faellt erst auf der Website auf.
 4. **Objekt in AnyType erstellen** via `mcp__anytype__API-create-object` mit:
    - `space_id`: Wert aus `ANYTYPE_SPACE_ID` (GitHub Secret / lokale Env-Variable)
    - `type_key`: `experimente` | `infrastruktur` | `gedankenraum`
@@ -134,8 +174,9 @@ Wenn der User einen neuen Eintrag für schimmilab.de erstellen möchte:
 5. **Bestätigung geben:** Nach Erstellung Titel und Typ des erstellten Objekts nennen.
 
 Wenn der User einen bestehenden Eintrag aktualisieren möchte:
-1. Mit `mcp__anytype__API-search-space` den Eintrag suchen.
-2. Mit `mcp__anytype__API-update-object` aktualisieren (gleiche `space_id`).
+1. ⛔ **NICHT blind `API-search-space` vertrauen** (siehe Warnblock oben — exakte Substring-Suche ueber den Namen, Body wird nicht durchsucht). Ein Nullbefund ist **kein** Beleg, dass der Eintrag fehlt.
+2. Verlaesslich: `anytype_id` aus der generierten `*.ts`-Datei im Repo lesen, sonst `API-list-objects`.
+3. Mit `mcp__anytype__API-update-object` aktualisieren (gleiche `space_id`).
 
 ## Wann diesen Skill verwenden
 
