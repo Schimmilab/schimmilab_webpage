@@ -134,7 +134,10 @@ def extract_section(content: str, heading: str, all_headings: list) -> str:
     as a fallback (e.g. '🎯 Problem\\n…').
     """
     # 1. Standard Markdown heading: ## [emoji] Heading
-    pattern = rf'#{1,3}[^\n]*\b{re.escape(heading)}\b[^\n]*\n(.*?)(?=\n#{1,3}|\Z)'
+    # {{1,3}} statt {1,3}: im rf-String wurde {1,3} zum Text "(1, 3)", das Muster griff nie (bis 16.10.2026)
+    # Grenze ist nur die naechste HAUPT-Ueberschrift (Problem/Hypothese/...), nicht jede ###-Unterueberschrift.
+    haupt = "|".join(re.escape(k) for k in all_headings)
+    pattern = rf'(?m)^#{{1,3}}[^\n]*\b{re.escape(heading)}\b[^\n]*\n(.*?)(?=^#{{1,3}}[^\n]*\b(?:{haupt})\b|\Z)'
     match = re.search(pattern, content, re.DOTALL | re.IGNORECASE)
     if match:
         section = match.group(1).strip()
