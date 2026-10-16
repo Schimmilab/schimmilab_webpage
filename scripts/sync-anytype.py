@@ -42,16 +42,77 @@ _INFRA_HEADINGS = ["Überblick", "Stack", "Architektur", "Setup", "Kosten", "Sic
 
 # ── API helpers ────────────────────────────────────────────────────────────────
 def fetch_object_markdown(object_id: str) -> str:
-    """Fetch full object content as Markdown via get-object endpoint."""
+    """Fetch full object content as Markdown (JSON API v2, ?format=md)."""
     resp = requests.get(
-        f"{API_BASE}/v1/spaces/{SPACE_ID}/objects/{object_id}",
+        f"{API_BASE}/v2/spaces/{SPACE_ID}/objects/{object_id}",
         headers=HEADERS,
+        params={"format": "md"},
         timeout=30,
     )
     if resp.status_code != 200:
         print(f"    ⚠️  Objekt {object_id[:24]}… HTTP {resp.status_code}", file=sys.stderr)
         return ""
-    return resp.json().get("object", {}).get("markdown", "") or ""
+    md = resp.json().get("markdown", "") or ""
+    # v2 appends "   <br>" to table cells, v1 did not (checked against the live data
+    # 16.10.2026). Remove only that, the trailing "   " line ends were the same in v1.
+    md = re.sub(r"[ \t]+<br>", "", md)
+    # v2 starts the markdown with the object name as "# <Titel>", v1 did not.
+    md = re.sub(r"\A# [^\n]*\n", "", md)
+    return md
+
+# ── JSON API v2 adapter ────────────────────────────────────────────────────────
+# Since anytype-cli v0.5.0 (13.10.2026) keys scoped to one space or read-only work
+# with the JSON API v2 only. The parsers below still expect the v1 object shape
+# (properties as a list of {key, text|date|select|multi_select}), so v2 objects are
+# converted here instead of rewriting every parser.
+def v2_search_all() -> list:
+    """All objects of the space (compact: id, name, type), paginated."""
+    out, offset = [], 0
+    while True:
+        resp = requests.post(
+            f"{API_BASE}/v2/spaces/{SPACE_ID}/search",
+            headers=HEADERS, params={"limit": 100, "offset": offset},
+            json={}, timeout=30,
+        )
+        resp.raise_for_status()
+        j = resp.json()
+        out += j.get("data", [])
+        if not j.get("has_more"):
+            return out
+        offset += len(j.get("data", [])) or 100
+
+def v2_property_defs() -> dict:
+    """property key -> (name, format)"""
+    resp = requests.get(f"{API_BASE}/v2/spaces/{SPACE_ID}/properties",
+                        headers=HEADERS, params={"limit": 500}, timeout=30)
+    resp.raise_for_status()
+    return {p.get("key"): (p.get("name", ""), p.get("format", "")) for p in resp.json().get("data", [])}
+
+def v2_to_v1(compact: dict, defs: dict) -> dict:
+    """Fetch an object's properties via v2 and return it in the v1 shape the parsers use."""
+    resp = requests.get(f"{API_BASE}/v2/spaces/{SPACE_ID}/objects/{compact['id']}",
+                        headers=HEADERS, params={"include": "properties"}, timeout=30)
+    resp.raise_for_status()
+    props_v2 = resp.json().get("properties", {}) or {}
+    props = []
+    for key, val in props_v2.items():
+        name, fmt = defs.get(key, ("", ""))
+        if fmt == "multi_select" or isinstance(val, list):
+            entry = {"key": key, "multi_select": [{"name": v} for v in (val or [])]}
+        elif fmt == "select":
+            entry = {"key": key, "select": {"name": val}}
+        elif fmt == "date" or key.endswith("_date"):
+            entry = {"key": key, "date": val}
+        else:
+            entry = {"key": key, "text": val if isinstance(val, str) else str(val)}
+        props.append(entry)
+        # v1 exposed the text property "Kategorie" as key "kategorie"
+        if name == "Kategorie" and fmt == "text":
+            props.append({**entry, "key": "kategorie"})
+    t = compact.get("type")
+    type_key = t if isinstance(t, str) else (t or {}).get("key", "")
+    return {"id": compact["id"], "name": props_v2.get("name", compact.get("name", "")),
+            "type": {"key": type_key, "name": ""}, "properties": props}
 
 # ── Text helpers ───────────────────────────────────────────────────────────────
 def slugify(text: str) -> str:
@@ -490,16 +551,17 @@ def main():
     print(f"   API: {API_BASE}")
     print(f"   Space: {SPACE_ID[:40]}...")
 
-    # 1. Search all objects to get type info and IDs
-    resp = requests.post(
-        f"{API_BASE}/v1/spaces/{SPACE_ID}/search",
-        headers=HEADERS,
-        json={"query": "", "limit": 200},
-        timeout=30,
-    )
-    resp.raise_for_status()
-    objects = resp.json().get("data", [])
-    print(f"📦 {len(objects)} Objekte gefunden")
+    # 1. Search all objects (JSON API v2), then load each relevant object's properties
+    defs = v2_property_defs()
+    compact = v2_search_all()
+    wanted = {"experimente", "gedankenraum", "infrastruktur"}
+    objects = []
+    for c in compact:
+        t = c.get("type")
+        tk = t if isinstance(t, str) else (t or {}).get("key", "")
+        if tk in wanted:
+            objects.append(v2_to_v1(c, defs))
+    print(f"📦 {len(compact)} Objekte gefunden, davon {len(objects)} relevant")
 
     experiments, thoughts, infra_items = [], [], []
 
